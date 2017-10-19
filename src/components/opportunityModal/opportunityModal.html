@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>{{ title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="response">
+    <ion-label>
+        {{ opportunity.title }}
+    </ion-label>
+    <ion-label>
+        {{ opportunity.description }}
+    </ion-label>
+  </div>
+
+  <div class="buttons">
+    <button ion-button round (click)="sendInterest()">Declarar interesse</button>
+    <button ion-button outline round (click)="dismiss()">Fechar</button>
+  </div>
+
+</ion-content>

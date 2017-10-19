@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>Reportar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item no-margin padding-left padding-right>
+    <ion-label>Categoria</ion-label>
+    <ion-select [(ngModel)]="report.type">
+      <ion-option value="{{type.id}}" *ngFor="let type of reportTypes">{{ type.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item no-margin padding-left padding-right>
+    <ion-input type="text" placeholder="Assunto" [value]="report.title"></ion-input>
+  </ion-item>
+
+  <ion-item no-margin padding-left padding-right>
+    <ion-textarea rows="5" placeholder="Descrição" [value]="report.description"></ion-textarea>
+  </ion-item>
+
+  <div class="buttons">
+    <button ion-button round (click)="submitReport()">Reportar para universidade</button>
+  </div>
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-segment [(ngModel)]="page">
+    <ion-segment-button value="bandejoes" (click)="showBandejoes()">
+      Bandejões
+    </ion-segment-button>
+    <ion-segment-button value="restaurants" (click)="showRestaurants()">
+      Restaurantes
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div #map id="map"></div>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item no-margin no-padding>
+    <ion-label> 
+      <ion-icon name="chatbubbles" color="gray"></ion-icon>
+    </ion-label>
+    <ion-input type="text" [value]="user.username" disabled="true"></ion-input>
+  </ion-item>
+
+  <ion-item no-margin no-padding>
+    <ion-label> 
+      <ion-icon name="school" color="gray"></ion-icon>
+    </ion-label>
+    <ion-input type="text" [value]="user.university" disabled="true"></ion-input>
+  </ion-item>
+
+  <ion-item no-margin no-padding>
+    <ion-label> 
+      <ion-icon name="clipboard" color="gray"></ion-icon>
+    </ion-label>
+    <ion-input placeholder="Nome" type="text" [value]="user.name"></ion-input>
+  </ion-item>
+
+  <ion-item no-margin no-padding>
+    <ion-label>
+      <ion-icon name="quote" color="gray"></ion-icon>
+    </ion-label>
+    <ion-textarea placeholder="Descrição" [value]="user.description"></ion-textarea>
+  </ion-item>
+
+  <!-- Private information form -->
+  <div margin-top padding-top>
+    <h4 no-margin no-padding class="info-text">Informações privadas</h4>
+    <hr class="custom-hr" color="gray">
+  </div>
+  
+  <ion-item>
+    <ion-label> 
+      <ion-icon name="mail" color="gray"></ion-icon>
+    </ion-label>
+    <ion-input placeholder="Email" type="text" [value]="user.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label> 
+      <ion-icon name="phone-portrait" color="gray"></ion-icon>
+    </ion-label>
+    <ion-input placeholder="Número" type="text" [value]="user.phone"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="transgender" color="gray"></ion-icon>
+    </ion-label>
+    <ion-select class="custom-select" [(ngModel)]="user.gender">
+      <ion-option value="male">Masculino</ion-option>
+      <ion-option value="female">Feminino</ion-option>
+      <ion-option value="other">Outro</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="buttons">
+    <button ion-button round outline (click)="logout()">Sair</button>
+    <button ion-button round (click)="saveProfile()">Salvar</button>
+  </div>
+
+</ion-content>

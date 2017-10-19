@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-segment [(ngModel)]="page">
+    <ion-segment-button value="parties" (click)="showParties()">
+      Festas
+    </ion-segment-button>
+    <ion-segment-button value="academics" (click)="showAcademics()">
+      Eventos
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div #map id="map"></div>
+</ion-content>

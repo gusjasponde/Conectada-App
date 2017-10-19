@@ -1,0 +1,39 @@
+page-login {
+  #login {
+    background-image: url('../assets/images/login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+  }
+
+  .buttons {
+    text-align: center;
+    bottom: 10vh;
+    position: absolute;
+    display: block;
+    width: 100%;
+  }
+
+  .custom-hr {
+    background-color: #F7931E;
+  }
+
+  #logo {
+    position: absolute;
+    width: 100%;
+    margin-top: 17vh;
+    height: 20vh;
+    background-image: url('../assets/images/logo.png');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center; 
+  }
+
+  #forgot-password {
+    text-align: center;
+    color: #F7931E;
+    text-decoration: underline;
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}

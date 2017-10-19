@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-searchbar placeholder="Buscar oportunidade" class="searchbar" (input)="filterOpportunities($event)"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="internships.length > 0">
+    <ion-list-header>
+      Estágio
+    </ion-list-header>
+    <button ion-item *ngFor="let opportunity of internships" (click)="selectOpportunity(opportunity)">
+      {{ opportunity.title }}
+    </button> 
+  </ion-list>
+
+  <ion-list *ngIf="researchs.length > 0">
+    <ion-list-header>
+      Pesquisa
+    </ion-list-header>
+    <button ion-item *ngFor="let opportunity of researchs" (click)="selectOpportunity(opportunity)">
+      {{ opportunity.title }}
+    </button> 
+  </ion-list>
+</ion-content>

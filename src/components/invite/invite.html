@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>Conectada<span style="color:grey">.io</span></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div id="logo"></div>
+
+  <ion-card-content>
+    <div>
+      <p>
+        Oi, Name. Estamos felizes que esteja aqui. Mas antes de começar, podemos te conhecer um pouco mais?
+      </p>
+      <ion-note style="font-size: 12px">
+        Por favor, preencha seu complemento de cadastro e solicite um convite. Dica: são apenas 8 perguntinhas!
+      </ion-note>
+    </div>
+  </ion-card-content>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Qual cidade você mora?</ion-label>
+    <ion-input type="text" [value]="invite.city"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: Rio de Janeiro
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Em qual estado ela fica?</ion-label>
+    <ion-input type="text" [value]="invite.state"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: Rio de Janeiro
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Onde você estuda?</ion-label>
+    <ion-input type="text" [value]="invite.university"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: UFRJ
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Você estuda em qual campus?</ion-label>
+    <ion-input type="text" [value]="invite.campus"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: Cidade universitária
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Qual curso você faz?</ion-label>
+    <ion-input type="text" [value]="invite.course"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: Letras - Francês
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Qual é a sua idade?</ion-label>
+    <ion-input type="number" [value]="invite.age"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: 18
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Qual é o seu email pessoal?</ion-label>
+    <ion-input type="email" [value]="invite.email"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: nome@email.com
+  </ion-note>
+
+  <ion-item no-margin no-padding>
+    <ion-label stacked>Possui email universitário? Se sim, qual?</ion-label>
+    <ion-input type="text" [value]="invite.universityEmail"></ion-input>
+  </ion-item>
+  <ion-note style="font-size: 12px">
+    Exemplo: Sim, nome@universidade.com
+  </ion-note>
+
+  <div class="buttons">
+    <button ion-button round (click)="sendInvite()">Pedir convite</button>
+  </div>
+</ion-content>

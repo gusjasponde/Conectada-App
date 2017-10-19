@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>Conectada<span style="color:grey">.io</span></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div id="logo"></div>
+
+  <ion-card-content>
+    <div>
+      <p>
+        Name, seu convite está sendo analisado. Quando chegarmos a uma conclusão, você será o primeiro a saber.
+      </p>
+      <ion-note style="font-size: 12px" (click)="test()">
+        Qualquer dúvida, crítica ou sugestão entre em contato conosco através do contato@conectada.io
+      </ion-note>
+    </div>
+  </ion-card-content>
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>Conectada<span style="color:grey">.io</span></ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openProfile()">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div id="logo"></div>
+
+  <ion-card-content *ngIf="feeds.length > 0">
+    <div *ngFor="let feed of feeds">
+      <p><ion-icon name="{{feed.icon}}"></ion-icon> {{ feed.feedTypeText }}</p>
+      <div
+        *ngIf="feed.image"
+        class="offer-image"
+        [style.background-image]="'url(' + feed.image + ')'">
+      </div>
+      <p>
+        <b> {{ feed.name }} </b> {{ feed.shortDescription }}
+      </p>
+      <ion-note *ngIf="feed.showMoreText.length > 0" style="font-size: 12px" (click)="feed.showMore()">
+        {{ feed.showMoreText }}
+      </ion-note>
+    </div>
+  </ion-card-content>
+</ion-content>
