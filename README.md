@@ -25,8 +25,8 @@ yarn android
 ```
 
 ## Contribuidores
-- Matheus Freire Rabelo (@matheusrabelo)
-- Leonardo Teixeira Menezes (@ltmenezes)
+- Matheus Freire Rabelo ([@matheusrabelo](https://github.com/matheusrabelo/))
+- Leonardo Teixeira Menezes ([@ltmenezes](https://github.com/ltmenezes/))
 
 ## Atenção
 Este projeto não chegou a ficar em produção. Alguns trechos podem estar modificados.
