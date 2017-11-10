@@ -12,7 +12,7 @@ declare const ga;
 @Injectable()
 export class ApiService {
     private credential: any = {};
-    private baseURL: string = 'http://xxxx.compute.amazonaws.com:8080';
+    private baseURL: string = 'https://conectada-mockapi.herokuapp.com';
     private baseApiURL: string = `${this.baseURL}/api`;
     private baseAuthURL: string = `${this.baseURL}/auth`;
     private api;
