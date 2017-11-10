@@ -40,12 +40,11 @@ export class Login {
       });
   }
 
-  private test() {
-    return this.AuthsService.test()
-      .then(success => {
-        if (success) {
-          utils.setNavRoot(this.nav, Invite);
-        }
-      });
+  private goToInvite() {
+    utils.setNavRoot(this.nav, Invite);
+  }
+
+  private goToTabsPage() {
+    utils.setNavRoot(this.nav, TabsPage);
   }
 }

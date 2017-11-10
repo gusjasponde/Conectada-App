@@ -1,12 +1,16 @@
 <ion-content id="login">
   <div id="logo"></div>
   <div class="buttons">
-    <button ion-button color="facebook" (click)="loginWithFacebook()" medium icon-start>
+    <!-- <button ion-button color="facebook" (click)="loginWithFacebook()" medium icon-start>
         Entrar com o Facebook
     </button>
+    <br /> -->
+    <button ion-button color="danger" (click)="goToInvite()" medium icon-start>
+        Ir para tela de convites
+    </button>
     <br />
-    <button ion-button color="danger" (click)="test()" medium icon-start>
-        Teste
+    <button ion-button color="danger" (click)="goToTabsPage()" medium icon-start>
+      Ir para tela principal
     </button>
   </div>
 </ion-content>
