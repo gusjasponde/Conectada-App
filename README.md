@@ -5,23 +5,21 @@ Esse é o aplicativo do projeto [Conectada](https://conectada.io).
 
 ## Como instalar
 ```
-npm install -g yarn
 npm install -g ionic
 npm install -g cordova
-yarn install
-cordova platform add android
-yarn android
+npm install
+npm run serve
 ```
 
 ## Scripts
 Desenvolver
 ```
-yarn serve
+npm run serve
 ```
 
 Build
 ```
-yarn android
+npm run android
 ```
 
 ## Contribuidores
