@@ -11,6 +11,7 @@
         "serve": "ionic-app-scripts serve",
         "ionic:build": "ionic-app-scripts build",
         "ionic:serve": "ionic-app-scripts serve",
+        "web": "ionic-app-scripts build",
         "android": "cordova build android",
         "ios": "cordova build ios"
     },
