@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { reportTypes } from './reportTypes';
 import { Report } from '../../interfaces/report';
 import { SentReport } from '../../interfaces/sentReport';
@@ -15,9 +15,9 @@ const response: SentReport = {
 };
 
 @Injectable()
-export class Reports {
+export class ReportsProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     getReportTypes(): Observable<Array<ReportType>> {

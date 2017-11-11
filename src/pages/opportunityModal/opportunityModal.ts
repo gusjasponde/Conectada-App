@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
 import { Opportunity } from '../../interfaces/opportunity';
-import { Opportunities } from '../../providers/opportunities/opportunities';
+import { OpportunitiesProvider } from '../../providers/opportunities/opportunities';
 import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
@@ -20,13 +20,13 @@ export class OpportunityModalPage implements OnInit, OnDestroy {
   constructor (
     private viewCtrl: ViewController,
     private modalCtrl: ModalController,
-    private opportunities: Opportunities,
+    private opportunitiesProvider: OpportunitiesProvider,
     private params: NavParams
   ) {}
 
   sendInterest() {
     this.viewCtrl.dismiss();
-    this.sendInterestSub = this.opportunities.sendInterest()
+    this.sendInterestSub = this.opportunitiesProvider.sendInterest()
       .subscribe(response => {
         const modal = this.modalCtrl.create(ModalPage, response);
         modal.present();

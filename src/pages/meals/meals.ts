@@ -4,7 +4,7 @@ import { Component, ElementRef, ViewChild, OnDestroy} from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
 import { Restaurant } from '../../interfaces/restaurant';
-import { Meals } from '../../providers/meals/meals';
+import { MealsProvider } from '../../providers/meals/meals';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { MapConfig } from '../../interfaces/mapConfig';
@@ -42,7 +42,7 @@ export class MealsPage implements OnDestroy {
     private navCtrl: NavController,
     private navParams: NavParams,
     private modalCtrl: ModalController,
-    private meals: Meals
+    private mealsProvider: MealsProvider
   ) {}
 
   filterRestaurantsByCategory(restaurants: Array<Restaurant>) {
@@ -89,8 +89,8 @@ export class MealsPage implements OnDestroy {
   }
 
   ionViewDidLoad() {
-    const restaurantsObservable = this.meals.getRestaurants();
-    const mapConfigObservable = this.meals.getInitialMapConfig();
+    const restaurantsObservable = this.mealsProvider.getRestaurants();
+    const mapConfigObservable = this.mealsProvider.getInitialMapConfig();
     this.restaurantsSub = restaurantsObservable
       .subscribe(events => (this.filterRestaurantsByCategory(events)));
     this.mapConfigSub = mapConfigObservable

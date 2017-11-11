@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { ModalPage } from '../modal/modal';
 import { Report } from '../../interfaces/report';
 import { ReportType } from '../../interfaces/reportType';
-import { Reports } from '../../providers/reports/reports';
+import { ReportsProvider } from '../../providers/reports/reports';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -30,11 +30,11 @@ export class ReportsPage {
     private viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private reports: Reports
+    private reportsProvider: ReportsProvider
   ) {}
 
   submitReport() {
-    return this.reports.submitReport(this.report)
+    return this.reportsProvider.submitReport(this.report)
       .subscribe(data => {
         const { title, description } = data;
         const modal = this.modalCtrl.create(ModalPage, data);
@@ -43,7 +43,7 @@ export class ReportsPage {
   }
 
   refresh($event) {
-    this.reportTypesSub = this.reports.getReportTypes()
+    this.reportTypesSub = this.reportsProvider.getReportTypes()
       .subscribe(reportTypes => {
         this.reportTypes = reportTypes;
         $event.complete();
@@ -51,7 +51,7 @@ export class ReportsPage {
   }
 
   ionViewDidLoad() {
-    this.reportTypesSub = this.reports.getReportTypes()
+    this.reportTypesSub = this.reportsProvider.getReportTypes()
       .subscribe(reportTypes => (this.reportTypes = reportTypes));
   }
 

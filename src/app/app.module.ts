@@ -4,14 +4,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { Home } from '../providers/home/home';
-import { Events } from '../providers/events/events';
-import { Meals } from '../providers/meals/meals';
-import { Opportunities } from '../providers/opportunities/opportunities';
-import { Profiles } from '../providers/profiles/profiles';
-import { Reports } from '../providers/reports/reports';
-import { Auths } from '../providers/auths/auths';
-import { Api } from '../providers/api';
+import { HomeProvider } from '../providers/home/home';
+import { EventsProvider } from '../providers/events/events';
+import { MealsProvider } from '../providers/meals/meals';
+import { OpportunitiesProvider } from '../providers/opportunities/opportunities';
+import { ProfilesProvider } from '../providers/profiles/profiles';
+import { ReportsProvider } from '../providers/reports/reports';
+import { AuthsProvider } from '../providers/auths/auths';
+import { ApiProvider } from '../providers/api';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { ModalPage } from '../pages/modal/modal';
@@ -72,15 +72,15 @@ import { Facebook } from '@ionic-native/facebook';
     StatusBar,
     SplashScreen,
     Camera,
-    Events,
-    Meals,
-    Opportunities,
-    Profiles,
-    Reports,
-    Auths,
-    Home,
+    ApiProvider,
+    EventsProvider,
+    MealsProvider,
+    OpportunitiesProvider,
+    ProfilesProvider,
+    ReportsProvider,
+    AuthsProvider,
+    HomeProvider,
     Facebook,
-    Api,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

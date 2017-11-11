@@ -2,7 +2,7 @@ import moment from 'moment';
 import { ModalController } from 'ionic-angular';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { Event } from '../../interfaces/event';
 import { MapConfig } from '../../interfaces/mapConfig';
 import { Observable } from 'rxjs/Observable';
@@ -18,9 +18,9 @@ const mapConfig: MapConfig = {
 };
 
 @Injectable()
-export class Events {
+export class EventsProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     getInitialMapConfig(): Observable<MapConfig> {
@@ -28,6 +28,6 @@ export class Events {
     }
 
     getEvents(): Observable<Array<Event>> {
-        return this.api.getEvents();
+        return this.apiProvider.getEvents();
     }
 }

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { Restaurant } from '../../interfaces/restaurant';
 import { MapConfig } from '../../interfaces/mapConfig';
 import { Observable } from 'rxjs/Observable';
@@ -17,9 +17,9 @@ const mapConfig: MapConfig = {
 };
 
 @Injectable()
-export class Meals {
+export class MealsProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     getInitialMapConfig(): Observable<MapConfig> {
@@ -27,6 +27,6 @@ export class Meals {
     }
 
     getRestaurants(): Observable<Array<Restaurant>> {
-        return this.api.getRestaurants();
+        return this.apiProvider.getRestaurants();
     }
 }

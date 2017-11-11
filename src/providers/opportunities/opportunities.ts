@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { Opportunity } from '../../interfaces/opportunity';
 import { SentInterest } from '../../interfaces/sentInterest';
 import { Observable } from 'rxjs/Observable';
@@ -13,9 +13,9 @@ const sendInterestResponse: SentInterest = {
 };
 
 @Injectable()
-export class Opportunities {
+export class OpportunitiesProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     sendInterest(): Observable<SentInterest> {
@@ -23,6 +23,6 @@ export class Opportunities {
     }
 
     getOpportunities(): Observable<Array<Opportunity>> {
-        return this.api.getOpportunities();
+        return this.apiProvider.getOpportunities();
     }
 }

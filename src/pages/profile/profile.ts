@@ -6,8 +6,8 @@ import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
 import { LoginPage } from '../login/login';
 import { ModalPage } from '../modal/modal';
-import { Profiles } from '../../providers/profiles/profiles';
-import { Auths } from '../../providers/auths/auths';
+import { ProfilesProvider } from '../../providers/profiles/profiles';
+import { AuthsProvider } from '../../providers/auths/auths';
 import { Profile } from '../../interfaces/profile';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -36,8 +36,8 @@ export class ProfilePage implements OnDestroy {
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private nav: NavController,
-    private auths: Auths,
-    private profiles: Profiles
+    private authsProvider: AuthsProvider,
+    private profilesProvider: ProfilesProvider
   ) {}
 
   saveProfile() {
@@ -49,14 +49,14 @@ export class ProfilePage implements OnDestroy {
   }
 
   logout() {
-    this.auths.logout()
+    this.authsProvider.logout()
       .then(() => {
         utils.setNavRoot(this.nav, LoginPage);
       });
   }
 
   ionViewDidLoad() {
-    this.profileSub = this.profiles.getProfile()
+    this.profileSub = this.profilesProvider.getProfile()
       .subscribe(profile => (this.user = profile));
   }
 

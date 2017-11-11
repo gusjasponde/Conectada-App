@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 
 import { Event } from '../../interfaces/event';
-import { Events } from '../../providers/events/events';
+import { EventsProvider } from '../../providers/events/events';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MapConfig } from '../../interfaces/mapConfig';
@@ -30,7 +30,7 @@ export class EventsPage implements OnDestroy {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private events: Events
+    private eventsProvider: EventsProvider
   ) {}
 
   showParties() {
@@ -80,8 +80,8 @@ export class EventsPage implements OnDestroy {
   }
 
   ionViewDidLoad() {
-    const eventsObservable = this.events.getEvents();
-    const mapConfigObservable = this.events.getInitialMapConfig();
+    const eventsObservable = this.eventsProvider.getEvents();
+    const mapConfigObservable = this.eventsProvider.getInitialMapConfig();
     this.eventsSub = eventsObservable
       .subscribe(events => (this.filterEventsByCategory(events)));
     this.mapConfigSub = mapConfigObservable

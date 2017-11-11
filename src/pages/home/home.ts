@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams,
 import { Component, OnDestroy } from '@angular/core';
 
 import { ProfilePage } from '../profile/profile';
-import { Home } from '../../providers/home/home';
+import { HomeProvider } from '../../providers/home/home';
 import { Feed, ViewFeed } from '../../interfaces/feed';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { ModalPage } from '../modal/modal';
@@ -24,7 +24,7 @@ export class HomePage implements OnDestroy {
     private viewCtrl: ViewController,
     private params: NavParams,
     private modalCtrl: ModalController,
-    private home: Home
+    private homeProvider: HomeProvider
   ) {}
 
   openProfile() {
@@ -92,7 +92,7 @@ export class HomePage implements OnDestroy {
   }
 
   refresh($event) {
-    this.feedsSub = this.home.getFeeds()
+    this.feedsSub = this.homeProvider.getFeeds()
       .subscribe(feeds => {
         this.feeds = this.mapFeedsByType(feeds);
         $event.complete();
@@ -100,7 +100,7 @@ export class HomePage implements OnDestroy {
   }
 
   ionViewDidLoad() {
-    this.feedsSub = this.home.getFeeds()
+    this.feedsSub = this.homeProvider.getFeeds()
       .subscribe(feeds => (this.feeds = this.mapFeedsByType(feeds)));
   }
 

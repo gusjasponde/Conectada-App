@@ -3,7 +3,7 @@ import { Component, OnDestroy } from '@angular/core';
 
 import { Opportunity } from '../../interfaces/opportunity';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
-import { Opportunities } from '../../providers/opportunities/opportunities';
+import { OpportunitiesProvider } from '../../providers/opportunities/opportunities';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -23,7 +23,7 @@ export class OpportunitiesPage implements OnDestroy {
     private navCtrl: NavController, 
     private navParams: NavParams, 
     private modalCtrl: ModalController,
-    private opportunities: Opportunities
+    private opportunitiesProvider: OpportunitiesProvider
   ) {}
 
   selectOpportunity(opportunity) {
@@ -52,7 +52,7 @@ export class OpportunitiesPage implements OnDestroy {
   }
 
   refresh($event) {
-    this.opportunitiesSub = this.opportunities.getOpportunities()
+    this.opportunitiesSub = this.opportunitiesProvider.getOpportunities()
       .subscribe(opportunities => {
         this.mapOpportunitiesByType(opportunities);
         $event.complete();
@@ -60,7 +60,7 @@ export class OpportunitiesPage implements OnDestroy {
   }
 
   ionViewDidLoad(){
-    this.opportunitiesSub = this.opportunities.getOpportunities()
+    this.opportunitiesSub = this.opportunitiesProvider.getOpportunities()
       .subscribe(opportunities => (this.mapOpportunitiesByType(opportunities)));
   }
 

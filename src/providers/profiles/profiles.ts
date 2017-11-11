@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { Profile } from '../../interfaces/profile';
 import { Observable } from 'rxjs/Observable';
 
@@ -17,9 +17,9 @@ const profile: Profile = {
 };
 
 @Injectable()
-export class Profiles {
+export class ProfilesProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     getProfile(): Observable<Profile> {

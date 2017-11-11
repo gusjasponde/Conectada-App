@@ -4,18 +4,18 @@ import { Injectable, Inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import * as utils from '../utils';
 import { userStatus } from '../../interfaces/userStatus';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class Auths {
+export class AuthsProvider {
     constructor(
         private alert: AlertController,
         private facebook: Facebook,
         private storage: Storage,
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     createHeadersCredential(response) {
@@ -62,7 +62,7 @@ export class Auths {
     }
 
     authenticate(headers): Observable<any> {
-        return this.api.authenticate(headers);
+        return this.apiProvider.authenticate(headers);
     }
 
     getUserStatusByAuth(auth): userStatus {

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { Api } from '../api'; 
+import { ApiProvider } from '../api'; 
 import { Feed } from '../../interfaces/feed';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,12 +29,12 @@ const feeds: Array<Feed> = [
 ];
 
 @Injectable()
-export class Home {
+export class HomeProvider {
     constructor(
-        @Inject(Api) private api: Api
+        @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
     getFeeds(): Observable<any> {
-        return this.api.getHome();
+        return this.apiProvider.getHome();
     }
 }

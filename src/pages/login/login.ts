@@ -7,7 +7,7 @@ import { TabsPage } from '../tabs/tabs';
 import { InvitePage } from '../invite/invite';
 import { InviteSentPage } from '../inviteSent/inviteSent';
 import { userStatus } from '../../interfaces/userStatus';
-import { Auths } from '../../providers/auths/auths';
+import { AuthsProvider } from '../../providers/auths/auths';
 
 declare const window;
 
@@ -21,12 +21,12 @@ export class LoginPage {
     private nav: NavController,
     private viewCtrl: ViewController,
     private params: NavParams,
-    private auths: Auths,
+    private authsProvider: AuthsProvider,
     private alert: AlertController
   ) {}
 
   loginWithFacebook() {
-    return this.auths.loginWithFacebook()
+    return this.authsProvider.loginWithFacebook()
       .then(auth => {
         utils.createAlert(this.alert, 'then', JSON.stringify(auth));
         if (auth === false) return;
