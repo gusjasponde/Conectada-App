@@ -2,9 +2,9 @@ import moment from 'moment';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import { Modal } from '../modal/modal';
+import { ModalPage } from '../modal/modal';
 import { Restaurant } from '../../interfaces/restaurant';
-import { MealsService } from '../../services/meals/meals';
+import { Meals } from '../../providers/meals/meals';
 
 declare const google;
 
@@ -13,7 +13,7 @@ declare const google;
   selector: 'page-meals',
   templateUrl: 'meals.html',
 })
-export class Meals {
+export class MealsPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapOptions: {} = {};
@@ -42,13 +42,13 @@ export class Meals {
     private navCtrl: NavController,
     private navParams: NavParams,
     private modalCtrl: ModalController,
-    private MealsService: MealsService) {
+    private meals: Meals) {
       this.configMap();
       this.updateRestaurants();
   }
 
   updateRestaurants() {
-    return this.MealsService.getRestaurants()
+    return this.meals.getRestaurants()
       .then(restaurants => {
         this.bandejoes = restaurants.filter(restaurant =>
           restaurant.restaurantType === 1);
@@ -58,7 +58,7 @@ export class Meals {
   }
 
   configMap() {
-    return this.MealsService.getInitialMapConfig()
+    return this.meals.getInitialMapConfig()
       .then(config => {
         const { initialLatitude, initialLongitude, zoom, mapTypeControl,
           scaleControl, streetViewControl, rotateControl } = config;
@@ -89,7 +89,7 @@ export class Meals {
 
   selectRestaurant(restaurant) {
     const { title, description } = restaurant;
-    const modal = this.modalCtrl.create(Modal, {
+    const modal = this.modalCtrl.create(ModalPage, {
       title, description
     });
     modal.present();

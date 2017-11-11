@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Event } from '../../interfaces/event';
-import { EventsService } from '../../services/events/events';
+import { Events } from '../../providers/events/events';
 
 declare const google;
 
@@ -12,7 +12,7 @@ declare const google;
   selector: 'page-events',
   templateUrl: 'events.html',
 })
-export class Events {
+export class EventsPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapOptions: {} = {};
@@ -40,13 +40,13 @@ export class Events {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private EventsService: EventsService) {
+    private events: Events) {
       this.configMap();
       this.updateEvents();
   }
 
   updateEvents(): Promise<any> {
-    return this.EventsService.getEvents()
+    return this.events.getEvents()
       .then(events => {
         this.parties = events.filter(event =>
           event.eventType === 2);
@@ -56,7 +56,7 @@ export class Events {
   }
 
   configMap() {
-    return this.EventsService.getInitialMapConfig()
+    return this.events.getInitialMapConfig()
       .then(config => {
         const { initialLatitude, initialLongitude, zoom, mapTypeControl,
           scaleControl, streetViewControl, rotateControl } = config;

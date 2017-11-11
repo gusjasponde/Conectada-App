@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   selector: 'page-modal',
   templateUrl: 'modal.html',
 })
-export class Modal {
+export class ModalPage {
   title: string = '';
   description: string = '';
 

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Home } from './home';
+import { HomePage } from './home';
 
 @NgModule({
   declarations: [
-    Home,
+    HomePage,
   ],
   imports: [
-    IonicPageModule.forChild(Home),
+    IonicPageModule.forChild(HomePage),
   ],
   exports: [
-    Home
+    HomePage
   ]
 })
 export class HomeModule {}

@@ -2,18 +2,18 @@ import { IonicPage, NavController, NavParams,
   ViewController, LoadingController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
-import { Profile } from '../profile/profile';
-import { HomeService } from '../../services/home/home';
+import { ProfilePage } from '../profile/profile';
+import { Home } from '../../providers/home/home';
 import { Feed, ViewFeed } from '../../interfaces/feed';
-import { OpportunityModal } from '../opportunityModal/opportunityModal';
-import { Modal } from '../modal/modal';
+import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
+import { ModalPage } from '../modal/modal';
 
 @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class Home {
+export class HomePage {
   feeds: Array<ViewFeed> = [];
 
   constructor (
@@ -21,15 +21,15 @@ export class Home {
     private viewCtrl: ViewController,
     private params: NavParams,
     private modalCtrl: ModalController,
-    private homeService: HomeService
+    private home: Home
   ) {}
 
   openProfile() {
-    this.nav.push(Profile);
+    this.nav.push(ProfilePage);
   }
 
   getFeeds() {
-    return this.homeService.getFeeds()
+    return this.home.getFeeds()
       .then(feeds => {
         this.feeds = feeds.map(feed => {
           feed.shortDescription = feed.description.slice(0, 100);
@@ -68,7 +68,7 @@ export class Home {
   }
 
   showOpportunity(viewFeed: ViewFeed) {
-    const modal = this.modalCtrl.create(OpportunityModal, {
+    const modal = this.modalCtrl.create(OpportunityModalPage, {
       id: viewFeed.id,
       opportunityType: viewFeed.feedType,
       title: viewFeed.name,
@@ -78,7 +78,7 @@ export class Home {
   }
 
   showRestaurant(viewFeed: ViewFeed) {
-    const modal = this.modalCtrl.create(Modal, {
+    const modal = this.modalCtrl.create(ModalPage, {
       title: viewFeed.name,
       description: viewFeed.description,
     });
@@ -86,7 +86,7 @@ export class Home {
   }
 
   showText(viewFeed: ViewFeed) {
-    const modal = this.modalCtrl.create(Modal, {
+    const modal = this.modalCtrl.create(ModalPage, {
       title: viewFeed.name,
       description: viewFeed.description,
     });

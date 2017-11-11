@@ -2,15 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import * as utils from '../utils';
-import { InviteSent } from '../inviteSent/inviteSent';
-import { AuthsService } from '../../services/auths/auths';
+import { InviteSentPage } from '../inviteSent/inviteSent';
 
 @IonicPage()
 @Component({
   selector: 'page-invite',
   templateUrl: 'invite.html',
 })
-export class Invite {
+export class InvitePage {
   invite = {
     city: '',
     state: '',
@@ -27,7 +26,7 @@ export class Invite {
   ) {}
 
   sendInvite() {
-    utils.setNavRoot(this.nav, InviteSent);
+    utils.setNavRoot(this.nav, InviteSentPage);
   }
 
   refresh($event) {

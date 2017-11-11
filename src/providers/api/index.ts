@@ -9,7 +9,7 @@ import { Event } from '../../interfaces/event';
 declare const ga;
 
 @Injectable()
-export class ApiService {
+export class Api {
     credential: any = {};
     baseURL: string = 'http://localhost:8080';
     baseApiURL: string = `${this.baseURL}/api`;

@@ -4,10 +4,10 @@ import { IonicPage, AlertController, NavController,
 
 import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
-import { Invite } from '../invite/invite';
-import { InviteSent } from '../inviteSent/inviteSent';
+import { InvitePage } from '../invite/invite';
+import { InviteSentPage } from '../inviteSent/inviteSent';
 import { userStatus } from '../../interfaces/userStatus';
-import { AuthsService } from '../../services/auths/auths';
+import { Auths } from '../../providers/auths/auths';
 
 declare const window;
 
@@ -16,25 +16,25 @@ declare const window;
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-export class Login {
+export class LoginPage {
   constructor (
     private nav: NavController,
     private viewCtrl: ViewController,
     private params: NavParams,
-    private AuthsService: AuthsService,
+    private auths: Auths,
     private alert: AlertController
   ) {}
 
   loginWithFacebook() {
-    return this.AuthsService.loginWithFacebook()
+    return this.auths.loginWithFacebook()
       .then(auth => {
         utils.createAlert(this.alert, 'then', JSON.stringify(auth));
         if (auth === false) return;
         switch(auth) {
           case userStatus.invite:
-            return utils.setNavRoot(this.nav, Invite);
+            return utils.setNavRoot(this.nav, InvitePage);
           case userStatus.inviteSent:
-            return utils.setNavRoot(this.nav, InviteSent);
+            return utils.setNavRoot(this.nav, InviteSentPage);
           case userStatus.authorized:
             return utils.setNavRoot(this.nav, TabsPage);
         }
@@ -42,7 +42,7 @@ export class Login {
   }
 
   goToInvite() {
-    utils.setNavRoot(this.nav, Invite);
+    utils.setNavRoot(this.nav, InvitePage);
   }
 
   goToTabsPage() {

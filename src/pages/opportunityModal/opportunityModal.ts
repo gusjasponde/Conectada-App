@@ -1,23 +1,23 @@
 import { IonicPage, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
-import { Modal } from '../modal/modal';
+import { ModalPage } from '../modal/modal';
 import { Opportunity } from '../../interfaces/opportunity';
-import { OpportunitiesService } from '../../services/opportunities/opportunities';
+import { Opportunities } from '../../providers/opportunities/opportunities';
 
 @IonicPage()
 @Component({
   selector: 'page-opportunity-modal',
   templateUrl: 'opportunityModal.html',
 })
-export class OpportunityModal {
+export class OpportunityModalPage {
   opportunity: Opportunity;
   title: String;
 
   constructor (
     private viewCtrl: ViewController,
     private modalCtrl: ModalController,
-    private OpportunitiesService: OpportunitiesService,
+    private opportunities: Opportunities,
     private params: NavParams) {
     this.opportunity = {
       id: params.get('id'),
@@ -35,9 +35,9 @@ export class OpportunityModal {
 
   sendInterest() {
     this.viewCtrl.dismiss();
-    this.OpportunitiesService.sendInterest()
+    this.opportunities.sendInterest()
       .then(response => {
-        const modal = this.modalCtrl.create(Modal, response);
+        const modal = this.modalCtrl.create(ModalPage, response);
         modal.present();
       });
   }

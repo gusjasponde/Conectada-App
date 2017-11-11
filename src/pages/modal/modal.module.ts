@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Modal } from './modal';
+import { ModalPage } from './modal';
 
 @NgModule({
   declarations: [
-    Modal,
+    ModalPage,
   ],
   imports: [
-    IonicPageModule.forChild(Modal),
+    IonicPageModule.forChild(ModalPage),
   ],
   exports: [
-    Modal
+    ModalPage
   ]
 })
 export class ModalModule {}

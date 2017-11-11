@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { OpportunityModal } from './opportunityModal';
+import { OpportunityModalPage } from './opportunityModal';
 
 @NgModule({
   declarations: [
-    OpportunityModal,
+    OpportunityModalPage,
   ],
   imports: [
-    IonicPageModule.forChild(OpportunityModal),
+    IonicPageModule.forChild(OpportunityModalPage),
   ],
   exports: [
-    OpportunityModal
+    OpportunityModalPage
   ]
 })
 export class OpportunityModalModule {}

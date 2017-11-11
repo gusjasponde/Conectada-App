@@ -2,21 +2,21 @@ import { NavController, NavParams, ModalController, IonicPage } from 'ionic-angu
 import { Component } from '@angular/core';
 
 import { Opportunity } from '../../interfaces/opportunity';
-import { OpportunityModal } from '../opportunityModal/opportunityModal';
-import { OpportunitiesService } from '../../services/opportunities/opportunities';
+import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
+import { Opportunities } from '../../providers/opportunities/opportunities';
 
 @IonicPage()
 @Component({
   selector: 'page-opportunities',
   templateUrl: 'opportunities.html',
 })
-export class Opportunities {
+export class OpportunitiesPage {
   rawOpportunities: Array<Opportunity> = [];
   internships: Array<Opportunity> = [];
   researchs: Array<Opportunity> = [];
 
   selectOpportunity(opportunity) {
-    const modal = this.modalCtrl.create(OpportunityModal, opportunity);
+    const modal = this.modalCtrl.create(OpportunityModalPage, opportunity);
     modal.present();
   }
 
@@ -24,7 +24,7 @@ export class Opportunities {
     private navCtrl: NavController, 
     private navParams: NavParams, 
     private modalCtrl: ModalController,
-    private OpportunitiesService: OpportunitiesService
+    private opportunities: Opportunities
   ) {}
 
   filterOpportunities($event) {
@@ -40,7 +40,7 @@ export class Opportunities {
   }
 
   getOpportunities(): Promise<any> {
-    return this.OpportunitiesService.getOpportunities()
+    return this.opportunities.getOpportunities()
       .then(opportunities => {
         this.rawOpportunities = opportunities;
         this.internships = this.rawOpportunities.filter(opportunity =>

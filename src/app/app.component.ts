@@ -4,25 +4,25 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { Login } from '../pages/login/login';
-import { AuthsService } from '../services/auths/auths';
+import { LoginPage } from '../pages/login/login';
+import { Auths } from '../providers/auths/auths';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = Login;
+  rootPage:any = LoginPage;
 
   constructor(
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    authsService: AuthsService,
+    auths: Auths,
     app:App) {
 
     platform.ready().then(() => {
       statusBar.backgroundColorByHexString('#F7931E');
-      authsService.getLoginStatus()
+      auths.getLoginStatus()
         .then(success => {
           if (success) {
              app.getActiveNav().push(TabsPage);

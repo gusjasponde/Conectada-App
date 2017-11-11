@@ -2,17 +2,17 @@ import { IonicPage, NavController, NavParams,
   ViewController, LoadingController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
-import { Modal } from '../modal/modal';
+import { ModalPage } from '../modal/modal';
 import { Report } from '../../interfaces/report';
 import { ReportType } from '../../interfaces/reportType';
-import { ReportsService } from '../../services/reports/reports';
+import { Reports } from '../../providers/reports/reports';
 
 @IonicPage()
 @Component({
   selector: 'page-reports',
   templateUrl: 'reports.html',
 })
-export class Reports {
+export class ReportsPage {
   reportTypes: void | Array<ReportType> = [];
   report: void | Report = {
     title: '',
@@ -26,7 +26,7 @@ export class Reports {
     private viewCtrl: ViewController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-    private ReportsService: ReportsService
+    private reports: Reports
   ) {}
 
   ionViewDidLoad(){
@@ -34,17 +34,17 @@ export class Reports {
   }
 
   getReportTypes() {
-    return this.ReportsService.getReportTypes()
+    return this.reports.getReportTypes()
       .then(reportTypes => {
         this.reportTypes = reportTypes;
       });
   }
 
   submitReport() {
-    return this.ReportsService.submitReport(this.report)
+    return this.reports.submitReport(this.report)
       .then(data => {
         const { title, description } = data;
-        const modal = this.modalCtrl.create(Modal, data);
+        const modal = this.modalCtrl.create(ModalPage, data);
         modal.present();
       });
   }

@@ -1,16 +1,14 @@
 import moment from 'moment';
-import { ModalController } from 'ionic-angular';
 import { Injectable, Inject } from '@angular/core';
 
-import { ApiService } from '../api'; 
-import { Event } from '../../interfaces/event';
+import { Api } from '../api'; 
+import { Restaurant } from '../../interfaces/restaurant';
 import { MapConfig } from '../../interfaces/mapConfig';
-import { Modal } from '../../pages/modal/modal';
 
 const mapConfig: MapConfig = {
     initialLatitude: -22.858926,
     initialLongitude: -43.2285518,
-    zoom: 13,
+    zoom: 14,
     mapTypeControl: false,
     scaleControl: false,
     streetViewControl: false,
@@ -18,42 +16,41 @@ const mapConfig: MapConfig = {
 };
 
 @Injectable()
-export class EventsService {
-    events?: Array<Event>;
+export class Meals {
+    restaurants?: Array<Restaurant>;
     lastUpdatedAt;
 
     constructor(
-        public modalCtrl: ModalController,
-        @Inject(ApiService) private api: ApiService) {
-    }
+        @Inject(Api) private api: Api
+    ) {}
 
     getInitialMapConfig(): Promise<MapConfig> {
         return Promise.resolve(mapConfig);
     }
 
-    getEvents(): Promise<Array<Event>> {
+    getRestaurants(): Promise<Array<Restaurant>> {
         if (this.shouldRefresh()) {
             return this.refresh();
         }
-        return Promise.resolve(this.events);
+        return Promise.resolve(this.restaurants);
     }
 
-    refresh(): Promise<Array<Event>> {
-        return this.api.getEvents()
-            .then(events => {
-                this.events = events;
+    refresh(): Promise<Array<Restaurant>> {
+        // API Call
+        return this.api.getRestaurants()
+            .then(restaurants => {
+                this.restaurants = restaurants;
                 this.lastUpdatedAt = moment();
-                return events;
+                return restaurants;
             })
             .catch(error => {
                 // [todo] send error to GA
                 this.lastUpdatedAt = moment();
-                return [];
             });
     } 
 
     shouldRefresh(): boolean {
-        if (this.events === undefined) return true;
+        if (this.restaurants === undefined) return true;
         // 30 seconds
         const lastUpdateDiff = moment().diff(this.lastUpdatedAt);
         if (lastUpdateDiff > 30000) return true;

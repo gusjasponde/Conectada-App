@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { ApiService } from '../api'; 
+import { Api } from '../api'; 
 import { reportTypes } from './reportTypes';
 import { Report } from '../../interfaces/report';
 import { SentReport } from '../../interfaces/sentReport';
@@ -14,13 +14,13 @@ const response: SentReport = {
 };
 
 @Injectable()
-export class ReportsService {
+export class Reports {
     reportTypes: Array<ReportType>;
     lastUpdatedAt;
 
     constructor(
-        @Inject(ApiService) private api: ApiService) {
-    }
+        @Inject(Api) private api: Api
+    ) {}
 
     getReportTypes(): Promise<void | Array<ReportType>> {
         if (this.shouldRefresh()) {

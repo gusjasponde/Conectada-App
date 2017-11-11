@@ -3,14 +3,13 @@ import { IonicPage, NavController } from 'ionic-angular';
 
 import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
-import { AuthsService } from '../../services/auths/auths';
 
 @IonicPage()
 @Component({
   selector: 'page-invite-sent',
   templateUrl: 'inviteSent.html',
 })
-export class InviteSent {
+export class InviteSentPage {
   constructor(
     private nav: NavController
   ) {}

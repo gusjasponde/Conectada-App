@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
-import { ApiService } from '../api'; 
+import { Api } from '../api'; 
 import { Profile } from '../../interfaces/profile';
 
 const profile: Profile = {
@@ -16,13 +16,13 @@ const profile: Profile = {
 };
 
 @Injectable()
-export class ProfilesService {
+export class Profiles {
     profile: Profile;
     lastUpdatedAt;
 
     constructor(
-        @Inject(ApiService) private api: ApiService) {
-    }
+        @Inject(Api) private api: Api
+    ) {}
 
     getProfile(): Promise<void | Profile> {
         if (this.shouldRefresh()) {

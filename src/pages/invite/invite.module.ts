@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Invite } from './invite';
+import { InvitePage } from './invite';
 
 @NgModule({
   declarations: [
-    Invite,
+    InvitePage,
   ],
   imports: [
-    IonicPageModule.forChild(Invite),
+    IonicPageModule.forChild(InvitePage),
   ],
   exports: [
-    Invite
+    InvitePage
   ]
 })
 export class InviteModule {}

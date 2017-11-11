@@ -4,17 +4,17 @@ import { Injectable, Inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook';
 
-import { ApiService } from '../api'; 
+import { Api } from '../api'; 
 import * as utils from '../utils';
 import { userStatus } from '../../interfaces/userStatus';
 
 @Injectable()
-export class AuthsService {
+export class Auths {
     constructor(
         private alert: AlertController,
         private facebook: Facebook,
         private storage: Storage,
-        @Inject(ApiService) private api: ApiService
+        @Inject(Api) private api: Api
     ) {}
 
     createHeadersCredential(response) {
