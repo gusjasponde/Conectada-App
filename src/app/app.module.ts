@@ -30,6 +30,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { Facebook } from '@ionic-native/facebook';
+import { ConectadaHeaderComponent } from '../components/conectada-header/conectada-header';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { Facebook } from '@ionic-native/facebook';
     LoginPage,
     InvitePage,
     InviteSentPage,
+    ConectadaHeaderComponent,
   ],
   imports: [
     BrowserModule,
