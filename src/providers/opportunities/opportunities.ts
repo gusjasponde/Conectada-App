@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
 import { ApiProvider } from '../api'; 
@@ -7,9 +6,9 @@ import { SentInterest } from '../../interfaces/sentInterest';
 import { Observable } from 'rxjs/Observable';
 
 const sendInterestResponse: SentInterest = {
-    "id": 12346,
-    "title": 'Interesse enviado',
-    "description": 'Seu interesse nessa vaga foi enviado com sucesso!',
+    id: 12346,
+    title: 'Interesse enviado',
+    description: 'Seu interesse nessa vaga foi enviado com sucesso!',
 };
 
 @Injectable()

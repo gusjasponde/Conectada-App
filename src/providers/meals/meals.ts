@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { Injectable, Inject } from '@angular/core';
 
 import { ApiProvider } from '../api'; 

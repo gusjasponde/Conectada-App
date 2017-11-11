@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { ModalController } from 'ionic-angular';
 import { Injectable, Inject } from '@angular/core';
 
