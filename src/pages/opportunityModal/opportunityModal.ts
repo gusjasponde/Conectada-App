@@ -1,48 +1,64 @@
 import { IonicPage, NavParams, ViewController, ModalController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
 import { Opportunity } from '../../interfaces/opportunity';
 import { Opportunities } from '../../providers/opportunities/opportunities';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
   selector: 'page-opportunity-modal',
   templateUrl: 'opportunityModal.html',
 })
-export class OpportunityModalPage {
+export class OpportunityModalPage implements OnInit, OnDestroy {
   opportunity: Opportunity;
   title: String;
+
+  sendInterestSub: Subscription;
 
   constructor (
     private viewCtrl: ViewController,
     private modalCtrl: ModalController,
     private opportunities: Opportunities,
-    private params: NavParams) {
-    this.opportunity = {
-      id: params.get('id'),
-      opportunityType: params.get('opportunityType'),
-      title: params.get('title'),
-      description: params.get('description'),
-    };
-    if (this.opportunity.opportunityType === 0) {
-      this.title = 'Estágio';
-    }
-    if (this.opportunity.opportunityType === 1) {
-      this.title = 'Pesquisa';
-    }
-  }
+    private params: NavParams
+  ) {}
 
   sendInterest() {
     this.viewCtrl.dismiss();
-    this.opportunities.sendInterest()
-      .then(response => {
+    this.sendInterestSub = this.opportunities.sendInterest()
+      .subscribe(response => {
         const modal = this.modalCtrl.create(ModalPage, response);
         modal.present();
       });
   }
 
+  setOpportunityTitleByType() {
+    if (this.opportunity.opportunityType === 1) {
+      this.title = 'Estágio';
+    }
+    if (this.opportunity.opportunityType === 2) {
+      this.title = 'Pesquisa';
+    }
+  }
+
   dismiss() {
-   this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss();
+  }
+
+  ngOnInit() {
+    this.opportunity = {
+      id: this.params.get('id'),
+      opportunityType: this.params.get('opportunityType'),
+      title: this.params.get('title'),
+      description: this.params.get('description'),
+    };
+    this.setOpportunityTitleByType();
+  }
+
+  ngOnDestroy() {
+    if (this.sendInterestSub) {
+      this.sendInterestSub.unsubscribe();
+    }
   }
 }

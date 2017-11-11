@@ -1,20 +1,23 @@
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @IonicPage()
 @Component({
   selector: 'page-modal',
   templateUrl: 'modal.html',
 })
-export class ModalPage {
+export class ModalPage implements OnInit {
   title: string = '';
   description: string = '';
 
   constructor (
     private viewCtrl: ViewController,
-    private params: NavParams) {
-    this.title = params.get('title');
-    this.description = params.get('description');
+    private params: NavParams
+  ) {}
+
+  ngOnInit() {
+    this.title = this.params.get('title');
+    this.description = this.params.get('description');
   }
 
   dismiss() {

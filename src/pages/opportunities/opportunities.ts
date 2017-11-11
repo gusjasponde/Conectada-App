@@ -1,24 +1,23 @@
 import { NavController, NavParams, ModalController, IonicPage } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Opportunity } from '../../interfaces/opportunity';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { Opportunities } from '../../providers/opportunities/opportunities';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
   selector: 'page-opportunities',
   templateUrl: 'opportunities.html',
 })
-export class OpportunitiesPage {
+export class OpportunitiesPage implements OnDestroy {
   rawOpportunities: Array<Opportunity> = [];
   internships: Array<Opportunity> = [];
   researchs: Array<Opportunity> = [];
 
-  selectOpportunity(opportunity) {
-    const modal = this.modalCtrl.create(OpportunityModalPage, opportunity);
-    modal.present();
-  }
+  opportunitiesSub: Subscription;
 
   constructor(
     private navCtrl: NavController, 
@@ -26,6 +25,11 @@ export class OpportunitiesPage {
     private modalCtrl: ModalController,
     private opportunities: Opportunities
   ) {}
+
+  selectOpportunity(opportunity) {
+    const modal = this.modalCtrl.create(OpportunityModalPage, opportunity);
+    modal.present();
+  }
 
   filterOpportunities($event) {
     const search = $event.target.value.toLowerCase();
@@ -39,24 +43,28 @@ export class OpportunitiesPage {
     });
   }
 
-  getOpportunities(): Promise<any> {
-    return this.opportunities.getOpportunities()
-      .then(opportunities => {
-        this.rawOpportunities = opportunities;
-        this.internships = this.rawOpportunities.filter(opportunity =>
-          opportunity.opportunityType === 1);
-        this.researchs = this.rawOpportunities.filter(opportunity =>
-          opportunity.opportunityType === 2);
-      });
-  }
-
-  ionViewDidLoad(){
-    this.getOpportunities();
+  mapOpportunitiesByType(opportunities) {
+    this.rawOpportunities = opportunities;
+    this.internships = this.rawOpportunities.filter(opportunity =>
+      opportunity.opportunityType === 1);
+    this.researchs = this.rawOpportunities.filter(opportunity =>
+      opportunity.opportunityType === 2);
   }
 
   refresh($event) {
-    this.getOpportunities()
-      .then(() => $event.complete())
-      .catch(() => $event.cancel());
+    this.opportunitiesSub = this.opportunities.getOpportunities()
+      .subscribe(opportunities => {
+        this.mapOpportunitiesByType(opportunities);
+        $event.complete();
+      }, () => $event.cancel());
+  }
+
+  ionViewDidLoad(){
+    this.opportunitiesSub = this.opportunities.getOpportunities()
+      .subscribe(opportunities => (this.mapOpportunitiesByType(opportunities)));
+  }
+
+  ngOnDestroy() {
+    this.opportunitiesSub.unsubscribe();
   }
 }

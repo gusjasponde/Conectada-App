@@ -17,8 +17,4 @@ export class InviteSentPage {
   refresh($event) {
     setTimeout(() => $event.complete(), 1000);
   }
-
-  test() {
-    utils.setNavRoot(this.nav, TabsPage);
-  }
 }

@@ -1,20 +1,23 @@
 import { IonicPage, NavController, NavParams,
   ViewController, LoadingController, ModalController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { ProfilePage } from '../profile/profile';
 import { Home } from '../../providers/home/home';
 import { Feed, ViewFeed } from '../../interfaces/feed';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { ModalPage } from '../modal/modal';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class HomePage {
+export class HomePage implements OnDestroy {
   feeds: Array<ViewFeed> = [];
+  feedsSub: Subscription;
 
   constructor (
     private nav: NavController,
@@ -28,43 +31,38 @@ export class HomePage {
     this.nav.push(ProfilePage);
   }
 
-  getFeeds() {
-    return this.home.getFeeds()
-      .then(feeds => {
-        this.feeds = feeds.map(feed => {
-          feed.shortDescription = feed.description.slice(0, 100);
-          feed.showMoreText = 'Ver mais';
-          switch (feed.feedType) {
-            case 0:
-              feed.feedTypeText = 'Estágio';
-              feed.icon = 'star';
-              feed.showMore = () => this.showOpportunity(feed);
-              break;
-            case 1:
-              feed.feedTypeText = 'Pesquisa';
-              feed.icon = 'star';
-              feed.showMore = () => this.showOpportunity(feed);
-              break;
-            case 2:
-              feed.feedTypeText = 'Restaurante';
-              feed.icon = 'restaurant';              
-              feed.showMore = () => this.showRestaurant(feed);
-              break;
-            case 3:
-              feed.feedTypeText = 'Evento';
-              feed.icon = 'calendar';
-              feed.showMore = () => {};
-              feed.moreText = '';               
-              break;
-            default:
-              feed.feedTypeText = 'Informativo';
-              feed.icon = 'text';
-              feed.showMore = () => this.showText(feed);              
-              break;
-          }
-          return feed;
-        });
-      });
+  fillFeedInfo(feed: any, typeText: string, icon: string,
+    showMore: () => void, moreText: undefined | string = undefined) {
+    feed.feedTypeText = typeText;
+    feed.icon = icon;
+    feed.showMore = showMore;
+    feed.moreText = moreText;
+    return feed;
+  }
+
+  mapFeedsByType(feeds: Array<any>) {
+    return feeds.map(feed => {
+      feed.shortDescription = feed.description.slice(0, 100);
+      feed.showMoreText = 'Ver mais';
+      switch (feed.feedType) {
+        case 0:
+          this.fillFeedInfo(feed, 'Estágio', 'star', () => this.showOpportunity(feed));
+          break;
+        case 1:
+          this.fillFeedInfo(feed, 'Pesquisa', 'star', () => this.showOpportunity(feed));
+          break;
+        case 2:
+          this.fillFeedInfo(feed, 'Restaurante', 'restaurant', () => this.showRestaurant(feed));
+          break;
+        case 3:
+          this.fillFeedInfo(feed, 'Evento', 'calendar', () => {}, '');
+          break;
+        default:
+          this.fillFeedInfo(feed, 'Informativo', 'text', () => this.showText(feed));
+          break;
+      }
+      return feed;
+    });
   }
 
   showOpportunity(viewFeed: ViewFeed) {
@@ -93,13 +91,20 @@ export class HomePage {
     modal.present();
   }
 
-  ionViewDidLoad(){
-    this.getFeeds();
+  refresh($event) {
+    this.feedsSub = this.home.getFeeds()
+      .subscribe(feeds => {
+        this.feeds = this.mapFeedsByType(feeds);
+        $event.complete();
+      }, () => $event.cancel());
   }
 
-  refresh($event) {
-    this.getFeeds()
-      .then(() => $event.complete())
-      .catch(() => $event.cancel());
+  ionViewDidLoad() {
+    this.feedsSub = this.home.getFeeds()
+      .subscribe(feeds => (this.feeds = this.mapFeedsByType(feeds)));
+  }
+
+  ngOnDestroy() {
+    this.feedsSub.unsubscribe();
   }
 }

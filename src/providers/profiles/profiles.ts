@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@angular/core';
 
 import { Api } from '../api'; 
 import { Profile } from '../../interfaces/profile';
+import { Observable } from 'rxjs/Observable';
 
 const profile: Profile = {
     image: '',
@@ -17,39 +18,11 @@ const profile: Profile = {
 
 @Injectable()
 export class Profiles {
-    profile: Profile;
-    lastUpdatedAt;
-
     constructor(
         @Inject(Api) private api: Api
     ) {}
 
-    getProfile(): Promise<void | Profile> {
-        if (this.shouldRefresh()) {
-            return this.refresh();
-        }
-        return Promise.resolve(this.profile);
-    }
-
-    refresh(): Promise<void | Profile> {
-        // API Call
-        return Promise.resolve(profile)
-            .then(profile => {
-                this.profile = profile;
-                this.lastUpdatedAt = moment();
-                return profile;
-            })
-            .catch(error => {
-                // [todo] send error to GA
-                this.lastUpdatedAt = moment();
-            });
-    } 
-
-    shouldRefresh(): boolean {
-        if (this.profile === undefined) return true;
-        // 30 seconds
-        const lastUpdateDiff = moment().diff(this.lastUpdatedAt);
-        if (lastUpdateDiff > 30000) return true;
-        return false;
+    getProfile(): Observable<Profile> {
+        return Observable.from(Promise.resolve(profile));
     }
 }

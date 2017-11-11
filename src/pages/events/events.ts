@@ -1,9 +1,12 @@
 import moment from 'moment';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 
 import { Event } from '../../interfaces/event';
 import { Events } from '../../providers/events/events';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { MapConfig } from '../../interfaces/mapConfig';
 
 declare const google;
 
@@ -12,7 +15,7 @@ declare const google;
   selector: 'page-events',
   templateUrl: 'events.html',
 })
-export class EventsPage {
+export class EventsPage implements OnDestroy {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapOptions: {} = {};
@@ -21,55 +24,44 @@ export class EventsPage {
   parties: Array<Event> = [];
   academics: Array<Event> = [];
 
-  showParties() {
-    this.updateEvents()
-      .then(() => {
-        this.loadMap();
-        this.parties.forEach(event => this.addEventMark(event, this.mapOptions));
-      });
-  }
-
-  showAcademics() {
-    this.updateEvents()
-      .then(() => {
-        this.loadMap();
-        this.academics.forEach(event => this.addEventMark(event, this.mapOptions));
-      })
-  }
+  eventsSub: Subscription;
+  mapConfigSub: Subscription;
 
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private events: Events) {
-      this.configMap();
-      this.updateEvents();
+    private events: Events
+  ) {}
+
+  showParties() {
+    this.refreshMap();
+    this.parties.forEach(event => this.addEventMark(event, this.mapOptions));
   }
 
-  updateEvents(): Promise<any> {
-    return this.events.getEvents()
-      .then(events => {
-        this.parties = events.filter(event =>
-          event.eventType === 2);
-        this.academics = events.filter(event =>
-          event.eventType === 1);
-      })
+  showAcademics() {
+    this.refreshMap();
+    this.academics.forEach(event => this.addEventMark(event, this.mapOptions));
   }
 
-  configMap() {
-    return this.events.getInitialMapConfig()
-      .then(config => {
-        const { initialLatitude, initialLongitude, zoom, mapTypeControl,
-          scaleControl, streetViewControl, rotateControl } = config;
-        const center = new google.maps.LatLng(initialLatitude, initialLongitude);
-        this.mapOptions = {
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center, zoom, mapTypeControl, scaleControl,
-          streetViewControl, rotateControl
-        }
-      });
+  filterEventsByCategory(events: Array<Event>) {
+    this.parties = events.filter(event =>
+      event.eventType === 2);
+    this.academics = events.filter(event =>
+      event.eventType === 1);
   }
 
-  addEventMark(event, mapOptions) {
+  configMap(mapConfig: MapConfig) {
+    const { initialLatitude, initialLongitude, zoom, mapTypeControl,
+      scaleControl, streetViewControl, rotateControl } = mapConfig;
+    const center = new google.maps.LatLng(initialLatitude, initialLongitude);
+    this.mapOptions = {
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      center, zoom, mapTypeControl, scaleControl,
+      streetViewControl, rotateControl
+    }
+  }
+
+  addEventMark(event: Event, mapOptions: {}) {
     const { title, latitude, longitude, date } = event;
     const infoWindow = new google.maps.InfoWindow;
     const marker = new google.maps.Marker({
@@ -83,11 +75,23 @@ export class EventsPage {
     });
   }
 
-  ionViewDidLoad(){
-    this.showParties();
+  refreshMap() {
+    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
   }
 
-  loadMap(){
-    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
+  ionViewDidLoad() {
+    const eventsObservable = this.events.getEvents();
+    const mapConfigObservable = this.events.getInitialMapConfig();
+    this.eventsSub = eventsObservable
+      .subscribe(events => (this.filterEventsByCategory(events)));
+    this.mapConfigSub = mapConfigObservable
+      .subscribe(mapConfig => (this.configMap(mapConfig)));
+    Observable.concat(eventsObservable, mapConfigObservable)
+      .subscribe(() => this.showParties());
+  }
+
+  ngOnDestroy() {
+    this.eventsSub.unsubscribe();
+    this.mapConfigSub.unsubscribe();
   }
 }

@@ -6,6 +6,8 @@ import { ModalPage } from '../modal/modal';
 import { Report } from '../../interfaces/report';
 import { ReportType } from '../../interfaces/reportType';
 import { Reports } from '../../providers/reports/reports';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
 @Component({
@@ -13,12 +15,14 @@ import { Reports } from '../../providers/reports/reports';
   templateUrl: 'reports.html',
 })
 export class ReportsPage {
-  reportTypes: void | Array<ReportType> = [];
-  report: void | Report = {
+  reportTypes: Array<ReportType> = [];
+  report: Report = {
     title: '',
     description: '',
     type: 0,
   };
+
+  reportTypesSub: Subscription;
 
   constructor(
     private navCtrl: NavController, 
@@ -29,20 +33,9 @@ export class ReportsPage {
     private reports: Reports
   ) {}
 
-  ionViewDidLoad(){
-    this.getReportTypes();
-  }
-
-  getReportTypes() {
-    return this.reports.getReportTypes()
-      .then(reportTypes => {
-        this.reportTypes = reportTypes;
-      });
-  }
-
   submitReport() {
     return this.reports.submitReport(this.report)
-      .then(data => {
+      .subscribe(data => {
         const { title, description } = data;
         const modal = this.modalCtrl.create(ModalPage, data);
         modal.present();
@@ -50,8 +43,19 @@ export class ReportsPage {
   }
 
   refresh($event) {
-    return this.getReportTypes()
-      .then(() => $event.complete())
-      .catch(() => $event.cancel());
+    this.reportTypesSub = this.reports.getReportTypes()
+      .subscribe(reportTypes => {
+        this.reportTypes = reportTypes;
+        $event.complete();
+      }, () => $event.cancel());
+  }
+
+  ionViewDidLoad() {
+    this.reportTypesSub = this.reports.getReportTypes()
+      .subscribe(reportTypes => (this.reportTypes = reportTypes));
+  }
+
+  ngOnDestroy() {
+    this.reportTypesSub.unsubscribe();
   }
 }

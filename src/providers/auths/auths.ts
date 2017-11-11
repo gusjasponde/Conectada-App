@@ -7,6 +7,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { Api } from '../api'; 
 import * as utils from '../utils';
 import { userStatus } from '../../interfaces/userStatus';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class Auths {
@@ -42,10 +43,6 @@ export class Auths {
         return false;
     }
 
-    test(): Promise<boolean> {
-        return Promise.resolve(true);
-    }
-
     loginWithFacebook(): Promise<userStatus | boolean> {
         return this.facebook
             .login(['public_profile', 'user_friends', 'email'])
@@ -64,7 +61,7 @@ export class Auths {
             });
     }
 
-    authenticate(headers): Promise<any> {
+    authenticate(headers): Observable<any> {
         return this.api.authenticate(headers);
     }
 

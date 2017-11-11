@@ -3,6 +3,8 @@ import { IonicPage, NavController } from 'ionic-angular';
 
 import * as utils from '../utils';
 import { InviteSentPage } from '../inviteSent/inviteSent';
+import { Invite } from '../../interfaces/invite';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -10,7 +12,7 @@ import { InviteSentPage } from '../inviteSent/inviteSent';
   templateUrl: 'invite.html',
 })
 export class InvitePage {
-  invite = {
+  invite: Invite = {
     city: '',
     state: '',
     university: '',

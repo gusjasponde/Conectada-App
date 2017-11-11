@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Observable } from 'rxjs';
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
@@ -46,63 +47,46 @@ export class Api {
         this.updateApi(credential);
     }
 
-    authenticate(headers): Promise<any> {
-        return new Promise((resolve, reject) => {
-            axios({
+    authenticate(headers): Observable<any> {
+        return Observable
+            .from(axios({
                 url: this.baseAuthURL,
                 method: 'GET',
                 headers,
-            })
-            .then(result => {
+            }))
+            .map(result => {
                 this.setCredential(headers);
-                resolve(result.data);
-            })
-            .catch(error => {
-                const { response } = error;
-                resolve(false);
+                return result.data;
             });
-        });
     }
 
-    createFacebookUser(headers): Promise<any> {
-        return new Promise((resolve, reject) => {
-            axios({
+    createFacebookUser(headers): Observable<any> {
+        return Observable
+            .from(axios({
                 url: this.baseAuthURL,
                 method: 'POST',
                 headers,
-            })
-            .then(result => {
-                resolve(result.data);
-            })
-            .catch(error => {
-                const { response } = error;
-                resolve(false);
-            });
-        });
+            }))
+            .map(result => result.data);
     }
 
-    getEvents(): Promise<any> {
-        return this.api.get('/events')
-            .then(result => this.checkRequest(result));
+    getEvents(): Observable<any> {
+        return Observable.from(this.api.get('/events'))
+            .map(result => this.checkRequest(result));
     }
 
-    getOpportunities(): Promise<any> {
-        return this.api.get('/opportunities')
-            .then(result => this.checkRequest(result));
-    }
-        
-    getProfile(): Promise<any> {
-        return this.api.get('/students')
-            .then(result => this.checkRequest(result));
+    getOpportunities(): Observable<any> {
+        return Observable.from(this.api.get('/opportunities'))
+            .map(result => this.checkRequest(result));
     }
 
-    getHome(): Promise<any> {
-        return this.api.get('/home')
-            .then(result => this.checkRequest(result));
+    getHome(): Observable<any> {
+        return Observable.from(this.api.get('/home'))
+            .map(result => this.checkRequest(result));
     }
 
-    getRestaurants(): Promise<any> {
-        return this.api.get('/restaurants')
-            .then(result => this.checkRequest(result));
+    getRestaurants(): Observable<any> {
+        return Observable.from(this.api.get('/restaurants'))
+            .map(result => this.checkRequest(result));
     }
 }
