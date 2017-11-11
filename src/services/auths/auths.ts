@@ -1,12 +1,12 @@
+import moment from 'moment';
+import { AlertController } from 'ionic-angular';
 import { Injectable, Inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook';
-import { ApiService } from '../api'; 
 
+import { ApiService } from '../api'; 
 import * as utils from '../utils';
-import { userStatus } from './types';
-import { AlertController } from 'ionic-angular';
-import moment from 'moment';
+import { userStatus } from '../../interfaces/userStatus';
 
 @Injectable()
 export class AuthsService {
@@ -14,10 +14,10 @@ export class AuthsService {
         private alert: AlertController,
         private facebook: Facebook,
         private storage: Storage,
-        @Inject(ApiService) private api: ApiService) {
-    }
+        @Inject(ApiService) private api: ApiService
+    ) {}
 
-    private createHeadersCredential(response) {
+    createHeadersCredential(response) {
         if (!response.authResponse) response.authResponse = {};
         return {
             status: response.status,
@@ -29,7 +29,7 @@ export class AuthsService {
         }
     }
 
-    private checkLoginWithFacebook(response): boolean {
+    checkLoginWithFacebook(response): boolean {
         utils.updateStorageFromFacebook(this.storage, response)
         if (response.status === 'connected') {
             // the user has successfully logged in
@@ -42,11 +42,11 @@ export class AuthsService {
         return false;
     }
 
-    public test(): Promise<boolean> {
+    test(): Promise<boolean> {
         return Promise.resolve(true);
     }
 
-    public loginWithFacebook(): Promise<userStatus | boolean> {
+    loginWithFacebook(): Promise<userStatus | boolean> {
         return this.facebook
             .login(['public_profile', 'user_friends', 'email'])
             .then(result => {
@@ -64,11 +64,11 @@ export class AuthsService {
             });
     }
 
-    public authenticate(headers): Promise<any> {
+    authenticate(headers): Promise<any> {
         return this.api.authenticate(headers);
     }
 
-    public getUserStatusByAuth(auth): userStatus {
+    getUserStatusByAuth(auth): userStatus {
         utils.createAlert(this.alert, '[a]', JSON.stringify(auth));
         if (!auth) userStatus.failed;
         const { success, facebookUserId, conectadaId } = auth;
@@ -84,13 +84,13 @@ export class AuthsService {
         return userStatus.failed;
     }
 
-    private getFacebookLoginStatus(): Promise<boolean> {
+    getFacebookLoginStatus(): Promise<boolean> {
         return Promise.resolve(false);
         // return this.facebook.getLoginStatus()
         //     .then(result => this.checkLoginWithFacebook(result));
     }
 
-    public getLoginStatus(): Promise<any> {
+    getLoginStatus(): Promise<any> {
         return Promise.resolve(false);
         // return utils
         //     .getStorageCredential(this.storage)
@@ -107,7 +107,7 @@ export class AuthsService {
         //     });
     }
 
-    public logout(): Promise<boolean> {
+    logout(): Promise<boolean> {
         return Promise.resolve()
             .then(() => {
                 utils.clearStorage(this.storage);

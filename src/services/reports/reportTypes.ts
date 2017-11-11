@@ -1,10 +1,4 @@
-import { ReportType, ReportResponse } from './types';
-
-export const response: ReportResponse = {
-    id: 250,
-    title: 'Reportado',
-    description: 'Reportado com sucesso!',
-};
+import { ReportType } from '../../interfaces/reportType';
 
 export const reportTypes: Array<ReportType> = [
     {

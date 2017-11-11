@@ -1,11 +1,21 @@
-import { Injectable, Inject } from '@angular/core';
-import { ModalController } from 'ionic-angular';
-import { ApiService } from '../api'; 
 import moment from 'moment';
-import { Event, MapConfig } from './types';
-import { mapConfig } from './mock';
+import { ModalController } from 'ionic-angular';
+import { Injectable, Inject } from '@angular/core';
 
+import { ApiService } from '../api'; 
+import { Event } from '../../interfaces/event';
+import { MapConfig } from '../../interfaces/mapConfig';
 import { Modal } from '../../components/modal/modal';
+
+const mapConfig: MapConfig = {
+    initialLatitude: -22.858926,
+    initialLongitude: -43.2285518,
+    zoom: 13,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false
+};
 
 @Injectable()
 export class EventsService {

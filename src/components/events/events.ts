@@ -1,8 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import moment from 'moment';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
-import { Event } from '../../services/events/types';
+import { Event } from '../../interfaces/event';
 import { EventsService } from '../../services/events/events';
 
 declare const google;
@@ -17,11 +17,11 @@ export class Events {
   map: any;
   mapOptions: {} = {};
 
-  public page:string = 'parties';
-  public parties: Array<Event> = [];
-  public academics: Array<Event> = [];
+  page:string = 'parties';
+  parties: Array<Event> = [];
+  academics: Array<Event> = [];
 
-  public showParties() {
+  showParties() {
     this.updateEvents()
       .then(() => {
         this.loadMap();
@@ -29,7 +29,7 @@ export class Events {
       });
   }
 
-  public showAcademics() {
+  showAcademics() {
     this.updateEvents()
       .then(() => {
         this.loadMap();
@@ -38,14 +38,14 @@ export class Events {
   }
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
+    private navParams: NavParams,
     private EventsService: EventsService) {
       this.configMap();
       this.updateEvents();
   }
 
-  public updateEvents(): Promise<any> {
+  updateEvents(): Promise<any> {
     return this.EventsService.getEvents()
       .then(events => {
         this.parties = events.filter(event =>
@@ -55,7 +55,7 @@ export class Events {
       })
   }
 
-  private configMap() {
+  configMap() {
     return this.EventsService.getInitialMapConfig()
       .then(config => {
         const { initialLatitude, initialLongitude, zoom, mapTypeControl,
@@ -69,7 +69,7 @@ export class Events {
       });
   }
 
-  private addEventMark(event, mapOptions) {
+  addEventMark(event, mapOptions) {
     const { title, latitude, longitude, date } = event;
     const infoWindow = new google.maps.InfoWindow;
     const marker = new google.maps.Marker({
@@ -83,11 +83,11 @@ export class Events {
     });
   }
 
-  private ionViewDidLoad(){
+  ionViewDidLoad(){
     this.showParties();
   }
 
-  private loadMap(){
+  loadMap(){
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
   }
 }

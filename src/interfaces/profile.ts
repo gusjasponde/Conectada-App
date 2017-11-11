@@ -1,4 +1,4 @@
-export type Profile = {
+export interface Profile {
     image?: String,
     name: String,
     username: String,

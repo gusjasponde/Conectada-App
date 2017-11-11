@@ -1,9 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import moment from 'moment';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Modal } from '../modal/modal';
-import { Restaurant } from '../../services/meals/types';
+import { Restaurant } from '../../interfaces/restaurant';
 import { MealsService } from '../../services/meals/meals';
 
 declare const google;
@@ -18,11 +18,11 @@ export class Meals {
   map: any;
   mapOptions: {} = {};
 
-  public page:string = 'bandejoes';
-  public bandejoes: Array<Restaurant> = [];
-  public restaurants: Array<Restaurant> = [];
+  page:string = 'bandejoes';
+  bandejoes: Array<Restaurant> = [];
+  restaurants: Array<Restaurant> = [];
 
-  public showBandejoes() {
+  showBandejoes() {
     this.updateRestaurants()
       .then(() => {
         this.loadMap();
@@ -30,7 +30,7 @@ export class Meals {
       });
   }
 
-  public showRestaurants() {
+  showRestaurants() {
     this.updateRestaurants()
       .then(() => {
         this.loadMap();
@@ -39,15 +39,15 @@ export class Meals {
   }
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
+    private navParams: NavParams,
     private modalCtrl: ModalController,
     private MealsService: MealsService) {
       this.configMap();
       this.updateRestaurants();
   }
 
-  public updateRestaurants() {
+  updateRestaurants() {
     return this.MealsService.getRestaurants()
       .then(restaurants => {
         this.bandejoes = restaurants.filter(restaurant =>
@@ -57,7 +57,7 @@ export class Meals {
       })
   }
 
-  private configMap() {
+  configMap() {
     return this.MealsService.getInitialMapConfig()
       .then(config => {
         const { initialLatitude, initialLongitude, zoom, mapTypeControl,
@@ -71,7 +71,7 @@ export class Meals {
       });
   }
 
-  private addRestaurantMark(restaurant, mapOptions) {
+  addRestaurantMark(restaurant, mapOptions) {
     const { title, description, latitude, longitude } = restaurant;
     const infoWindow = new google.maps.InfoWindow;
     const marker = new google.maps.Marker({
@@ -87,7 +87,7 @@ export class Meals {
     });
   }
 
-  private selectRestaurant(restaurant) {
+  selectRestaurant(restaurant) {
     const { title, description } = restaurant;
     const modal = this.modalCtrl.create(Modal, {
       title, description
@@ -95,11 +95,11 @@ export class Meals {
     modal.present();
   }
 
-  private ionViewDidLoad(){
+  ionViewDidLoad(){
     this.showBandejoes();
   }
 
-  private loadMap(){
+  loadMap(){
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
   }
 }

@@ -1,10 +1,17 @@
-import { Injectable, Inject } from '@angular/core';
-import { ApiService } from '../api'; 
-
 import moment from 'moment';
+import { Injectable, Inject } from '@angular/core';
 
-import { response, reportTypes } from './mock';
-import { Report, ReportResponse, ReportType } from './types';
+import { ApiService } from '../api'; 
+import { reportTypes } from './reportTypes';
+import { Report } from '../../interfaces/report';
+import { SentReport } from '../../interfaces/sentReport';
+import { ReportType } from '../../interfaces/reportType';
+
+const response: SentReport = {
+    id: 250,
+    title: 'Reportado',
+    description: 'Reportado com sucesso!',
+};
 
 @Injectable()
 export class ReportsService {
@@ -44,7 +51,7 @@ export class ReportsService {
         return false;
     }
 
-    submitReport(report: void | Report): Promise<ReportResponse> {
+    submitReport(report: void | Report): Promise<SentReport> {
         // Send report to API
         return Promise.resolve(response);
     }

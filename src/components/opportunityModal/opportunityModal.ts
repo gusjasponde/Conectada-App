@@ -1,8 +1,8 @@
+import { IonicPage, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 
 import { Modal } from '../modal/modal';
-import { Opportunity } from '../../services/opportunities/types';
+import { Opportunity } from '../../interfaces/opportunity';
 import { OpportunitiesService } from '../../services/opportunities/opportunities';
 
 @IonicPage()
@@ -15,10 +15,10 @@ export class OpportunityModal {
   title: String;
 
   constructor (
-    public viewCtrl: ViewController,
+    private viewCtrl: ViewController,
     private modalCtrl: ModalController,
     private OpportunitiesService: OpportunitiesService,
-    public params: NavParams) {
+    private params: NavParams) {
     this.opportunity = {
       id: params.get('id'),
       opportunityType: params.get('opportunityType'),

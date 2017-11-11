@@ -11,7 +11,7 @@ import { AuthsService } from '../../services/auths/auths';
   templateUrl: 'invite.html',
 })
 export class Invite {
-  public invite = {
+  invite = {
     city: '',
     state: '',
     university: '',
@@ -22,15 +22,15 @@ export class Invite {
     course: ''
   };
 
-  constructor(private nav: NavController) {
+  constructor(
+    private nav: NavController
+  ) {}
 
-  }
-
-  private sendInvite() {
+  sendInvite() {
     utils.setNavRoot(this.nav, InviteSent);
   }
 
-  private refresh($event) {
+  refresh($event) {
     setTimeout(() => $event.complete(), 1000);
   }
 }

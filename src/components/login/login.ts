@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, AlertController, NavController,
+  NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 
 import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
 import { Invite } from '../invite/invite';
 import { InviteSent } from '../inviteSent/inviteSent';
-import { userStatus } from '../../services/auths/types';
+import { userStatus } from '../../interfaces/userStatus';
 import { AuthsService } from '../../services/auths/auths';
 
 declare const window;
@@ -18,13 +19,13 @@ declare const window;
 export class Login {
   constructor (
     private nav: NavController,
-    public viewCtrl: ViewController,
-    public params: NavParams,
+    private viewCtrl: ViewController,
+    private params: NavParams,
     private AuthsService: AuthsService,
-    private alert: AlertController) {
-  }
+    private alert: AlertController
+  ) {}
 
-  private loginWithFacebook() {
+  loginWithFacebook() {
     return this.AuthsService.loginWithFacebook()
       .then(auth => {
         utils.createAlert(this.alert, 'then', JSON.stringify(auth));
@@ -40,11 +41,11 @@ export class Login {
       });
   }
 
-  private goToInvite() {
+  goToInvite() {
     utils.setNavRoot(this.nav, Invite);
   }
 
-  private goToTabsPage() {
+  goToTabsPage() {
     utils.setNavRoot(this.nav, TabsPage);
   }
 }

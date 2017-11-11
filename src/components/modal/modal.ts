@@ -1,5 +1,5 @@
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -11,8 +11,8 @@ export class Modal {
   description: string = '';
 
   constructor (
-    public viewCtrl: ViewController,
-    public params: NavParams) {
+    private viewCtrl: ViewController,
+    private params: NavParams) {
     this.title = params.get('title');
     this.description = params.get('description');
   }

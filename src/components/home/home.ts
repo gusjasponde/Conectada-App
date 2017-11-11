@@ -1,11 +1,10 @@
+import { IonicPage, NavController, NavParams,
+  ViewController, LoadingController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 
 import { Profile } from '../profile/profile';
-
 import { HomeService } from '../../services/home/home';
-import { Feed, ViewFeed } from '../../services/home/types';
-
+import { Feed, ViewFeed } from '../../interfaces/feed';
 import { OpportunityModal } from '../opportunityModal/opportunityModal';
 import { Modal } from '../modal/modal';
 
@@ -19,17 +18,17 @@ export class Home {
 
   constructor (
     private nav: NavController,
-    public viewCtrl: ViewController,
-    public params: NavParams,
-    public modalCtrl: ModalController,
-    private homeService: HomeService) {
-  }
+    private viewCtrl: ViewController,
+    private params: NavParams,
+    private modalCtrl: ModalController,
+    private homeService: HomeService
+  ) {}
 
-  public openProfile() {
+  openProfile() {
     this.nav.push(Profile);
   }
 
-  private getFeeds() {
+  getFeeds() {
     return this.homeService.getFeeds()
       .then(feeds => {
         this.feeds = feeds.map(feed => {
@@ -68,7 +67,7 @@ export class Home {
       });
   }
 
-  private showOpportunity(viewFeed: ViewFeed) {
+  showOpportunity(viewFeed: ViewFeed) {
     const modal = this.modalCtrl.create(OpportunityModal, {
       id: viewFeed.id,
       opportunityType: viewFeed.feedType,
@@ -78,7 +77,7 @@ export class Home {
     modal.present();
   }
 
-  private showRestaurant(viewFeed: ViewFeed) {
+  showRestaurant(viewFeed: ViewFeed) {
     const modal = this.modalCtrl.create(Modal, {
       title: viewFeed.name,
       description: viewFeed.description,
@@ -86,7 +85,7 @@ export class Home {
     modal.present();
   }
 
-  private showText(viewFeed: ViewFeed) {
+  showText(viewFeed: ViewFeed) {
     const modal = this.modalCtrl.create(Modal, {
       title: viewFeed.name,
       description: viewFeed.description,
@@ -94,11 +93,11 @@ export class Home {
     modal.present();
   }
 
-  private ionViewDidLoad(){
+  ionViewDidLoad(){
     this.getFeeds();
   }
 
-  private refresh($event) {
+  refresh($event) {
     this.getFeeds()
       .then(() => $event.complete())
       .catch(() => $event.cancel());

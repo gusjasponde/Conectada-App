@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
+import { Component } from '@angular/core';
 
 import { Home } from '../home/home';
 import { Events } from '../events/events';

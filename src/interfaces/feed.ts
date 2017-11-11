@@ -1,4 +1,4 @@
-export type Feed = {
+export interface Feed {
     id: Number,
     image?: String,
     feedType: Number,
@@ -6,7 +6,7 @@ export type Feed = {
     description: String,
 };
 
-export type ViewFeed = {
+export interface ViewFeed {
     id: Number,
     image?: String,
     feedType: Number,

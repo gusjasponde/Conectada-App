@@ -1,10 +1,11 @@
+import { NavController, NavParams, ModalController, IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
 
-import { Opportunity } from '../../services/opportunities/types';
+import { Opportunity } from '../../interfaces/opportunity';
 import { OpportunityModal } from '../opportunityModal/opportunityModal';
 import { OpportunitiesService } from '../../services/opportunities/opportunities';
 
+@IonicPage()
 @Component({
   selector: 'page-opportunities',
   templateUrl: 'opportunities.html',
@@ -20,13 +21,13 @@ export class Opportunities {
   }
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public modalCtrl: ModalController,
-    private OpportunitiesService: OpportunitiesService) {
-  }
+    private navCtrl: NavController, 
+    private navParams: NavParams, 
+    private modalCtrl: ModalController,
+    private OpportunitiesService: OpportunitiesService
+  ) {}
 
-  public filterOpportunities($event) {
+  filterOpportunities($event) {
     const search = $event.target.value.toLowerCase();
     this.internships = this.rawOpportunities.filter(opportunity => {
       const term = opportunity.title.toLowerCase();
@@ -38,7 +39,7 @@ export class Opportunities {
     });
   }
 
-  private getOpportunities(): Promise<any> {
+  getOpportunities(): Promise<any> {
     return this.OpportunitiesService.getOpportunities()
       .then(opportunities => {
         this.rawOpportunities = opportunities;
@@ -48,12 +49,12 @@ export class Opportunities {
           opportunity.opportunityType === 2);
       });
   }
-  
-  private ionViewDidLoad(){
+
+  ionViewDidLoad(){
     this.getOpportunities();
   }
 
-  private refresh($event) {
+  refresh($event) {
     this.getOpportunities()
       .then(() => $event.complete())
       .catch(() => $event.cancel());

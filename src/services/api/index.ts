@@ -1,28 +1,27 @@
+import axios from 'axios';
+import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { AlertController } from 'ionic-angular';
-
-import axios from 'axios';
 
 import * as utils from '../utils';
-import { Event } from '../events/types';
+import { Event } from '../../interfaces/event';
 
 declare const ga;
 
 @Injectable()
 export class ApiService {
-    private credential: any = {};
-    private baseURL: string = 'https://conectada-mockapi.herokuapp.com';
-    private baseApiURL: string = `${this.baseURL}/api`;
-    private baseAuthURL: string = `${this.baseURL}/auth`;
-    private api;
+    credential: any = {};
+    baseURL: string = 'http://localhost:8080';
+    baseApiURL: string = `${this.baseURL}/api`;
+    baseAuthURL: string = `${this.baseURL}/auth`;
+    api;
 
     constructor(
         private alert: AlertController) {
         this.updateApi({});
     }
 
-    private updateApi(headers) {
+    updateApi(headers) {
         this.api = axios.create({
             baseURL: this.baseApiURL,
             headers: {
@@ -32,7 +31,7 @@ export class ApiService {
         });
     }
 
-    private checkRequest(result) {
+    checkRequest(result) {
         const { status, data } = result;
         if (status >= 200 && status < 300) {
             if (data) return data;
@@ -42,12 +41,12 @@ export class ApiService {
         utils.createAlert(this.alert, 'Solicitação', 'Ocorreu um erro com sua solicitação');
     }
 
-    private setCredential(credential) {
+    setCredential(credential) {
         this.credential = credential;
         this.updateApi(credential);
     }
 
-    public authenticate(headers): Promise<any> {
+    authenticate(headers): Promise<any> {
         return new Promise((resolve, reject) => {
             axios({
                 url: this.baseAuthURL,
@@ -65,7 +64,7 @@ export class ApiService {
         });
     }
 
-    public createFacebookUser(headers): Promise<any> {
+    createFacebookUser(headers): Promise<any> {
         return new Promise((resolve, reject) => {
             axios({
                 url: this.baseAuthURL,
@@ -82,27 +81,27 @@ export class ApiService {
         });
     }
 
-    public getEvents(): Promise<any> {
+    getEvents(): Promise<any> {
         return this.api.get('/events')
             .then(result => this.checkRequest(result));
     }
 
-    public getOpportunities(): Promise<any> {
+    getOpportunities(): Promise<any> {
         return this.api.get('/opportunities')
             .then(result => this.checkRequest(result));
     }
         
-    public getProfile(): Promise<any> {
+    getProfile(): Promise<any> {
         return this.api.get('/students')
             .then(result => this.checkRequest(result));
     }
 
-    public getHome(): Promise<any> {
+    getHome(): Promise<any> {
         return this.api.get('/home')
             .then(result => this.checkRequest(result));
     }
 
-    public getRestaurants(): Promise<any> {
+    getRestaurants(): Promise<any> {
         return this.api.get('/restaurants')
             .then(result => this.checkRequest(result));
     }

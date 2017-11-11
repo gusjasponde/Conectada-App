@@ -11,14 +11,15 @@ import { AuthsService } from '../../services/auths/auths';
   templateUrl: 'inviteSent.html',
 })
 export class InviteSent {
-  constructor(private nav: NavController) {
-  }
+  constructor(
+    private nav: NavController
+  ) {}
 
-  private refresh($event) {
+  refresh($event) {
     setTimeout(() => $event.complete(), 1000);
   }
 
-  private test() {
+  test() {
     utils.setNavRoot(this.nav, TabsPage);
   }
 }

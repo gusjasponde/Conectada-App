@@ -1,10 +1,15 @@
-import { Injectable, Inject } from '@angular/core';
-import { ApiService } from '../api'; 
-
 import moment from 'moment';
+import { Injectable, Inject } from '@angular/core';
 
-import { Opportunity, ResponseSendInterest  } from './types';
-import { responseSendInterest } from './mock';
+import { ApiService } from '../api'; 
+import { Opportunity } from '../../interfaces/opportunity';
+import { SentInterest } from '../../interfaces/sentInterest';
+
+const responseSendInterest: SentInterest = {
+    "id": 12346,
+    "title": 'Interesse enviado',
+    "description": 'Seu interesse nessa vaga foi enviado com sucesso!',
+};
 
 @Injectable()
 export class OpportunitiesService {
@@ -15,7 +20,7 @@ export class OpportunitiesService {
         @Inject(ApiService) private api: ApiService) {
     }
 
-    sendInterest(): Promise<ResponseSendInterest> {
+    sendInterest(): Promise<SentInterest> {
         return Promise.resolve(responseSendInterest);
     }
 

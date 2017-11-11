@@ -1,8 +1,10 @@
+import { IonicPage, NavController, NavParams, 
+  ViewController, LoadingController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 
 import { Modal } from '../modal/modal';
-import { Report, ReportType } from '../../services/reports/types';
+import { Report } from '../../interfaces/report';
+import { ReportType } from '../../interfaces/reportType';
 import { ReportsService } from '../../services/reports/reports';
 
 @IonicPage()
@@ -11,34 +13,34 @@ import { ReportsService } from '../../services/reports/reports';
   templateUrl: 'reports.html',
 })
 export class Reports {
-  private reportTypes: void | Array<ReportType> = [];
-  public report: void | Report = {
+  reportTypes: void | Array<ReportType> = [];
+  report: void | Report = {
     title: '',
     description: '',
     type: 0,
   };
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public viewCtrl: ViewController,
-    public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController,
-    private ReportsService: ReportsService) {
-  }
+    private navCtrl: NavController, 
+    private navParams: NavParams, 
+    private viewCtrl: ViewController,
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private ReportsService: ReportsService
+  ) {}
 
-  private ionViewDidLoad(){
+  ionViewDidLoad(){
     this.getReportTypes();
   }
 
-  private getReportTypes() {
+  getReportTypes() {
     return this.ReportsService.getReportTypes()
       .then(reportTypes => {
         this.reportTypes = reportTypes;
       });
   }
 
-  private submitReport() {
+  submitReport() {
     return this.ReportsService.submitReport(this.report)
       .then(data => {
         const { title, description } = data;
@@ -47,7 +49,7 @@ export class Reports {
       });
   }
 
-  private refresh($event) {
+  refresh($event) {
     return this.getReportTypes()
       .then(() => $event.complete())
       .catch(() => $event.cancel());
