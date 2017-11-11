@@ -1,7 +1,13 @@
 # Conectada
+[Live Demo](https://matheusrabelo.github.io/Conectada-App/www/)
 
 ## Sobre
 Esse é o aplicativo do projeto [Conectada](https://conectada.io).
+
+## Disponível no endereço
+```
+https://matheusrabelo.github.io/Conectada-App/www
+```
 
 ## Como instalar
 ```
