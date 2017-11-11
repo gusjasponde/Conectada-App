@@ -6,7 +6,7 @@ import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
 import { InvitePage } from '../invite/invite';
 import { InviteSentPage } from '../inviteSent/inviteSent';
-import { userStatus } from '../../interfaces/userStatus';
+import { UserStatus } from '../../interfaces/userStatus';
 import { AuthsProvider } from '../../providers/auths/auths';
 
 declare const window;
@@ -25,27 +25,21 @@ export class LoginPage {
     private alert: AlertController
   ) {}
 
-  loginWithFacebook() {
-    return this.authsProvider.loginWithFacebook()
+  login() {
+    return this.authsProvider.login()
       .then(auth => {
-        utils.createAlert(this.alert, 'then', JSON.stringify(auth));
-        if (auth === false) return;
         switch(auth) {
-          case userStatus.invite:
+          case UserStatus.invite:
             return utils.setNavRoot(this.nav, InvitePage);
-          case userStatus.inviteSent:
+          case UserStatus.inviteSent:
             return utils.setNavRoot(this.nav, InviteSentPage);
-          case userStatus.authorized:
+          case UserStatus.authorized:
             return utils.setNavRoot(this.nav, TabsPage);
         }
       });
   }
 
-  goToInvite() {
+  goToInvitePage() {
     utils.setNavRoot(this.nav, InvitePage);
-  }
-
-  goToTabsPage() {
-    utils.setNavRoot(this.nav, TabsPage);
   }
 }

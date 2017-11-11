@@ -1,1 +1,1 @@
-export enum userStatus { failed, invite, inviteSent, authorized };
+export enum UserStatus { loggedOut, failed, invite, inviteSent, authorized };
