@@ -3,8 +3,8 @@ import { Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../components/tabs/tabs';
-import { Login } from '../components/login/login';
+import { TabsPage } from '../pages/tabs/tabs';
+import { Login } from '../pages/login/login';
 import { AuthsService } from '../services/auths/auths';
 
 @Component({
@@ -18,7 +18,7 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     authsService: AuthsService,
-    private app:App) {
+    app:App) {
 
     platform.ready().then(() => {
       statusBar.backgroundColorByHexString('#F7931E');

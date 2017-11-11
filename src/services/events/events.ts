@@ -5,7 +5,7 @@ import { Injectable, Inject } from '@angular/core';
 import { ApiService } from '../api'; 
 import { Event } from '../../interfaces/event';
 import { MapConfig } from '../../interfaces/mapConfig';
-import { Modal } from '../../components/modal/modal';
+import { Modal } from '../../pages/modal/modal';
 
 const mapConfig: MapConfig = {
     initialLatitude: -22.858926,
