@@ -1,15 +1,13 @@
-import moment from 'moment';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { Component, ElementRef, ViewChild, OnDestroy} from '@angular/core';
+import { IonicPage, ModalController } from 'ionic-angular';
+import { Component, OnDestroy} from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
 import { Restaurant } from '../../interfaces/restaurant';
 import { MealsProvider } from '../../providers/meals/meals';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { Marker, SelectedMarkEvent } from '../../interfaces/marker';
 import { MapConfig } from '../../interfaces/mapConfig';
-
-declare const google;
 
 @IonicPage()
 @Component({
@@ -17,30 +15,25 @@ declare const google;
   templateUrl: 'meals.html',
 })
 export class MealsPage implements OnDestroy {
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
-  mapOptions: {} = {};
-
-  page:string = 'bandejoes';
+  page: String = 'restaurantes';
   bandejoes: Array<Restaurant> = [];
   restaurants: Array<Restaurant> = [];
+
+  mapConfig: MapConfig = {};
+  markers: Array<Marker> = [];
 
   restaurantsSub: Subscription;
   mapConfigSub: Subscription;
 
   showBandejoes() {
-    this.refreshMap();
-    this.bandejoes.forEach(restaurant => this.addRestaurantMark(restaurant, this.mapOptions));
+    this.markers = this.bandejoes;
   }
 
   showRestaurants() {
-    this.refreshMap();
-    this.restaurants.forEach(restaurant => this.addRestaurantMark(restaurant, this.mapOptions));
+    this.markers = this.restaurants;
   }
 
   constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
     private modalCtrl: ModalController,
     private mealsProvider: MealsProvider
   ) {}
@@ -52,40 +45,12 @@ export class MealsPage implements OnDestroy {
       restaurant.restaurantType === 2);
   }
 
-  configMap(mapConfig: MapConfig) {
-    const { initialLatitude, initialLongitude, zoom, mapTypeControl,
-      scaleControl, streetViewControl, rotateControl } = mapConfig;
-    const center = new google.maps.LatLng(initialLatitude, initialLongitude);
-    this.mapOptions = {
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      center, zoom, mapTypeControl, scaleControl,
-      streetViewControl, rotateControl
-    }
-  }
-
-  addRestaurantMark(restaurant: Restaurant, mapOptions: {}) {
-    const { title, description, latitude, longitude } = restaurant;
-    const infoWindow = new google.maps.InfoWindow;
-    const marker = new google.maps.Marker({
-          position: new google.maps.LatLng(latitude, longitude),
-          map: this.map, title,
-    });
-    const htmlTitle = `<b>${title} - ${description}</b>`;
-    new google.maps.event.addListener(marker, 'click', () => {
-        this.selectRestaurant(restaurant);
-    });
-  }
-
-  selectRestaurant(restaurant: Restaurant) {
-    const { title, description } = restaurant;
+  handleSelectedMarker(selected: SelectedMarkEvent) {
+    const { title, description } = selected.marker;
     const modal = this.modalCtrl.create(ModalPage, {
       title, description
     });
     modal.present();
-  }
-
-  refreshMap() {
-    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
   }
 
   ionViewDidLoad() {
@@ -94,7 +59,7 @@ export class MealsPage implements OnDestroy {
     this.restaurantsSub = restaurantsObservable
       .subscribe(events => (this.filterRestaurantsByCategory(events)));
     this.mapConfigSub = mapConfigObservable
-      .subscribe(mapConfig => (this.configMap(mapConfig)));
+      .subscribe(mapConfig => (this.mapConfig = mapConfig));
     Observable.concat(restaurantsObservable, mapConfigObservable)
       .subscribe(() => this.showBandejoes());
   }

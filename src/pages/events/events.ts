@@ -1,12 +1,12 @@
-import moment from 'moment';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
 
 import { Event } from '../../interfaces/event';
 import { EventsProvider } from '../../providers/events/events';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MapConfig } from '../../interfaces/mapConfig';
+import { Marker, SelectedMarkEvent } from '../../interfaces/marker';
 
 declare const google;
 
@@ -16,31 +16,26 @@ declare const google;
   templateUrl: 'events.html',
 })
 export class EventsPage implements OnDestroy {
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
-  mapOptions: {} = {};
-
-  page:string = 'parties';
+  page: String = 'parties';
   parties: Array<Event> = [];
   academics: Array<Event> = [];
+
+  mapConfig: MapConfig = {};
+  markers: Array<Marker> = [];
 
   eventsSub: Subscription;
   mapConfigSub: Subscription;
 
   constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
     private eventsProvider: EventsProvider
   ) {}
 
   showParties() {
-    this.refreshMap();
-    this.parties.forEach(event => this.addEventMark(event, this.mapOptions));
+    this.markers = this.parties;
   }
 
   showAcademics() {
-    this.refreshMap();
-    this.academics.forEach(event => this.addEventMark(event, this.mapOptions));
+    this.markers = this.academics;
   }
 
   filterEventsByCategory(events: Array<Event>) {
@@ -50,33 +45,12 @@ export class EventsPage implements OnDestroy {
       event.eventType === 1);
   }
 
-  configMap(mapConfig: MapConfig) {
-    const { initialLatitude, initialLongitude, zoom, mapTypeControl,
-      scaleControl, streetViewControl, rotateControl } = mapConfig;
-    const center = new google.maps.LatLng(initialLatitude, initialLongitude);
-    this.mapOptions = {
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      center, zoom, mapTypeControl, scaleControl,
-      streetViewControl, rotateControl
-    }
-  }
-
-  addEventMark(event: Event, mapOptions: {}) {
-    const { title, latitude, longitude, date } = event;
+  handleSelectedMarker(selected: SelectedMarkEvent) {
+    const { title, latitude, longitude } = selected.marker;
     const infoWindow = new google.maps.InfoWindow;
-    const marker = new google.maps.Marker({
-          position: new google.maps.LatLng(latitude, longitude),
-          map: this.map, title,
-    });
-    const htmlTitle = `<b>${title} - ${moment(date).format('DD/MM')}</b>`;
-    new google.maps.event.addListener(marker, 'click', () => {
-        infoWindow.setContent(htmlTitle);
-        infoWindow.open(this.map, marker);
-    });
-  }
-
-  refreshMap() {
-    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
+    const htmlTitle = `<b>${title}</b>`;
+    infoWindow.setContent(htmlTitle);
+    infoWindow.open(selected.map, selected.googleMarker);
   }
 
   ionViewDidLoad() {
@@ -85,7 +59,7 @@ export class EventsPage implements OnDestroy {
     this.eventsSub = eventsObservable
       .subscribe(events => (this.filterEventsByCategory(events)));
     this.mapConfigSub = mapConfigObservable
-      .subscribe(mapConfig => (this.configMap(mapConfig)));
+      .subscribe(mapConfig => (this.mapConfig = mapConfig));
     Observable.concat(eventsObservable, mapConfigObservable)
       .subscribe(() => this.showParties());
   }

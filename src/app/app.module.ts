@@ -31,6 +31,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { Facebook } from '@ionic-native/facebook';
 import { ConectadaHeaderComponent } from '../components/conectada-header/conectada-header';
+import { MapComponent } from '../components/map/map';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ConectadaHeaderComponent } from '../components/conectada-header/conecta
     InvitePage,
     InviteSentPage,
     ConectadaHeaderComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
