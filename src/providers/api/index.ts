@@ -12,7 +12,7 @@ declare const ga;
 @Injectable()
 export class ApiProvider {
     credential: any = {};
-    baseURL: string = 'http://localhost:8080';
+    baseURL: string = 'https://conectada-mockapi.herokuapp.com';
     baseApiURL: string = `${this.baseURL}/api`;
     baseAuthURL: string = `${this.baseURL}/auth`;
     api;
