@@ -1,10 +1,9 @@
-import { IonicPage, NavController, NavParams,
-  ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Component, OnDestroy } from '@angular/core';
 
 import { ProfilePage } from '../profile/profile';
 import { HomeProvider } from '../../providers/home/home';
-import { Feed, ViewFeed } from '../../interfaces/feed';
+import { Feed, ViewFeed, FeedType } from '../../interfaces/feed';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { ModalPage } from '../modal/modal';
 import { Observable } from 'rxjs/Observable';
@@ -21,8 +20,6 @@ export class HomePage implements OnDestroy {
 
   constructor (
     private nav: NavController,
-    private viewCtrl: ViewController,
-    private params: NavParams,
     private modalCtrl: ModalController,
     private homeProvider: HomeProvider
   ) {}
@@ -45,16 +42,16 @@ export class HomePage implements OnDestroy {
       feed.shortDescription = feed.description.slice(0, 100);
       feed.showMoreText = 'Ver mais';
       switch (feed.feedType) {
-        case 0:
+        case FeedType.internship:
           this.fillFeedInfo(feed, 'Estágio', 'star', () => this.showOpportunity(feed));
           break;
-        case 1:
+        case FeedType.research:
           this.fillFeedInfo(feed, 'Pesquisa', 'star', () => this.showOpportunity(feed));
           break;
-        case 2:
+        case FeedType.restaurant:
           this.fillFeedInfo(feed, 'Restaurante', 'restaurant', () => this.showRestaurant(feed));
           break;
-        case 3:
+        case FeedType.event:
           this.fillFeedInfo(feed, 'Evento', 'calendar', () => {}, '');
           break;
         default:

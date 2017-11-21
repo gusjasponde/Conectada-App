@@ -1,7 +1,8 @@
+import * as R from 'ramda';
 import { IonicPage } from 'ionic-angular';
 import { Component, OnDestroy } from '@angular/core';
 
-import { Event } from '../../interfaces/event';
+import { Event, EventType } from '../../interfaces/event';
 import { EventsProvider } from '../../providers/events/events';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -39,10 +40,10 @@ export class EventsPage implements OnDestroy {
   }
 
   filterEventsByCategory(events: Array<Event>) {
-    this.parties = events.filter(event =>
-      event.eventType === 2);
-    this.academics = events.filter(event =>
-      event.eventType === 1);
+    const groupByType = R.groupBy(R.prop('eventType'));
+    const groupedEvents = groupByType(events);
+    this.parties = groupedEvents[EventType.party];
+    this.academics = groupedEvents[EventType.academic];
   }
 
   handleSelectedMarker(selected: SelectedMarkEvent) {

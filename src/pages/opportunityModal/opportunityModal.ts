@@ -2,7 +2,7 @@ import { IonicPage, NavParams, ViewController, ModalController } from 'ionic-ang
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
-import { Opportunity } from '../../interfaces/opportunity';
+import { Opportunity, OpportunityType } from '../../interfaces/opportunity';
 import { OpportunitiesProvider } from '../../providers/opportunities/opportunities';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -34,10 +34,10 @@ export class OpportunityModalPage implements OnInit, OnDestroy {
   }
 
   setOpportunityTitleByType() {
-    if (this.opportunity.opportunityType === 1) {
+    if (this.opportunity.opportunityType === OpportunityType.internship) {
       this.title = 'Estágio';
     }
-    if (this.opportunity.opportunityType === 2) {
+    if (this.opportunity.opportunityType === OpportunityType.research) {
       this.title = 'Pesquisa';
     }
   }

@@ -1,8 +1,9 @@
+import * as R from 'ramda';
 import { IonicPage, ModalController } from 'ionic-angular';
 import { Component, OnDestroy} from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
-import { Restaurant } from '../../interfaces/restaurant';
+import { Restaurant, RestaurantType } from '../../interfaces/restaurant';
 import { MealsProvider } from '../../providers/meals/meals';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -39,10 +40,10 @@ export class MealsPage implements OnDestroy {
   ) {}
 
   filterRestaurantsByCategory(restaurants: Array<Restaurant>) {
-    this.bandejoes = restaurants.filter(restaurant =>
-      restaurant.restaurantType === 1);
-    this.restaurants = restaurants.filter(restaurant =>
-      restaurant.restaurantType === 2);
+    const groupByType = R.groupBy(R.prop('restaurantType'));
+    const groupedRestaurants = groupByType(restaurants);
+    this.bandejoes = groupedRestaurants[RestaurantType.bandejao];
+    this.restaurants = groupedRestaurants[RestaurantType.restaurant];
   }
 
   handleSelectedMarker(selected: SelectedMarkEvent) {

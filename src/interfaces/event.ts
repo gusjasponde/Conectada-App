@@ -4,9 +4,14 @@ export interface Social {
     clicks: Number,
 };
 
+export enum EventType {
+    party = 1,
+    academic = 2,
+};
+
 export interface Event {
     id: Number,
-    eventType: Number,
+    eventType: EventType,
     title: String,
     description: String,
     date: Date,
@@ -14,4 +19,3 @@ export interface Event {
     longitude: Number,
     socials?: Array<Social>,
 };
-

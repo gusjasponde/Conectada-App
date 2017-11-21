@@ -1,7 +1,8 @@
-import { NavController, NavParams, ModalController, IonicPage } from 'ionic-angular';
+import * as R from 'ramda';
+import { ModalController, IonicPage } from 'ionic-angular';
 import { Component, OnDestroy } from '@angular/core';
 
-import { Opportunity } from '../../interfaces/opportunity';
+import { Opportunity, OpportunityType } from '../../interfaces/opportunity';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { OpportunitiesProvider } from '../../providers/opportunities/opportunities';
 import { Observable } from 'rxjs/Observable';
@@ -13,15 +14,13 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'opportunities.html',
 })
 export class OpportunitiesPage implements OnDestroy {
-  rawOpportunities: Array<Opportunity> = [];
+  groupedOpportunities: Array<any> = [];
   internships: Array<Opportunity> = [];
   researchs: Array<Opportunity> = [];
 
   opportunitiesSub: Subscription;
 
   constructor(
-    private navCtrl: NavController, 
-    private navParams: NavParams, 
     private modalCtrl: ModalController,
     private opportunitiesProvider: OpportunitiesProvider
   ) {}
@@ -33,22 +32,21 @@ export class OpportunitiesPage implements OnDestroy {
 
   filterOpportunities($event) {
     const search = $event.target.value.toLowerCase();
-    this.internships = this.rawOpportunities.filter(opportunity => {
+    const filterOpportunityByTerm = (opportunity) => {
       const term = opportunity.title.toLowerCase();
-      return opportunity.opportunityType === 1 && term.search(search) >= 0;
-    });
-    this.researchs = this.rawOpportunities.filter(opportunity => {
-      const term = opportunity.title.toLowerCase();
-      return opportunity.opportunityType === 2 && term.search(search) >= 0;
-    });
+      return term.search(search) >= 0;
+    };
+    this.internships = this.groupedOpportunities[OpportunityType.internship]
+      .filter(filterOpportunityByTerm);
+    this.researchs = this.groupedOpportunities[OpportunityType.research]
+      .filter(filterOpportunityByTerm);
   }
 
   mapOpportunitiesByType(opportunities) {
-    this.rawOpportunities = opportunities;
-    this.internships = this.rawOpportunities.filter(opportunity =>
-      opportunity.opportunityType === 1);
-    this.researchs = this.rawOpportunities.filter(opportunity =>
-      opportunity.opportunityType === 2);
+    const groupByType = R.groupBy(R.prop('opportunityType'));
+    this.groupedOpportunities = groupByType(opportunities);
+    this.internships = this.groupedOpportunities[OpportunityType.internship];
+    this.researchs = this.groupedOpportunities[OpportunityType.research];
   }
 
   refresh($event) {

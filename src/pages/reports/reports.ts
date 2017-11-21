@@ -1,6 +1,5 @@
-import { IonicPage, NavController, NavParams, 
-  ViewController, LoadingController, ModalController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { IonicPage, ModalController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
 
 import { ModalPage } from '../modal/modal';
 import { Report } from '../../interfaces/report';
@@ -14,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
   selector: 'page-reports',
   templateUrl: 'reports.html',
 })
-export class ReportsPage {
+export class ReportsPage implements OnDestroy {
   reportTypes: Array<ReportType> = [];
   report: Report = {
     title: '',
@@ -25,10 +24,6 @@ export class ReportsPage {
   reportTypesSub: Subscription;
 
   constructor(
-    private navCtrl: NavController, 
-    private navParams: NavParams, 
-    private viewCtrl: ViewController,
-    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private reportsProvider: ReportsProvider
   ) {}
