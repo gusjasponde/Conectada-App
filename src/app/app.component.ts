@@ -7,6 +7,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { AuthsProvider } from '../providers/auths/auths';
 
+import { UserStatus } from '../interfaces/userStatus';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -22,9 +24,9 @@ export class MyApp {
 
     platform.ready().then(() => {
       statusBar.backgroundColorByHexString('#F7931E');
-      authsProvider.getLoginStatus()
-        .then(success => {
-          if (success) {
+      authsProvider.login()
+        .then(status => {
+          if (status === UserStatus.authorized) {
              app.getActiveNav().push(TabsPage);
           }
           splashScreen.hide();

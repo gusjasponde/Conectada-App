@@ -4,7 +4,7 @@ export enum OpportunityType {
 };
 
 export interface Opportunity {
-    id: Number,
+    id: String,
     image?: String,
     opportunityType: OpportunityType,
     title: String,

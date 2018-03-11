@@ -1,88 +1,40 @@
-import axios from 'axios';
+import firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-
-import * as utils from '../utils';
 
 @Injectable()
 export class ApiProvider {
-    credential: any = {};
-    baseURL: string = 'https://conectada-mockapi.herokuapp.com';
-    baseApiURL: string = `${this.baseURL}/api`;
-    baseAuthURL: string = `${this.baseURL}/auth`;
-    api;
+    constructor() {}
 
-    constructor(
-        private alert: AlertController) {
-        this.updateApi({});
-    }
-
-    updateApi(headers) {
-        this.api = axios.create({
-            baseURL: this.baseApiURL,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                ...headers,
-            },
+    mapDBSnapshot(result: {val:()=>{}}) {
+        const value = result.val();
+        return Object.keys(value).map(key => {
+            const entry = value[key];
+            entry.id = key;
+            return entry;
         });
     }
 
-    checkRequest(result) {
-        const { status, data } = result;
-        if (status >= 200 && status < 300) {
-            if (data) return data;
-            return [];
-        }
-        utils.gaSend('request', 'check', 'error', status);
-        utils.createAlert(this.alert, 'Solicitação', 'Ocorreu um erro com sua solicitação');
-    }
+    getEntriesFromDBName(databaseName: string) {
+        const database = firebase.database().ref(`/v1/${databaseName}`);
 
-    setCredential(credential) {
-        this.credential = credential;
-        this.updateApi(credential);
-    }
-
-    authenticate(headers): Observable<any> {
-        return Observable
-            .from(axios({
-                url: this.baseAuthURL,
-                method: 'GET',
-                headers,
-            }))
-            .map(result => {
-                this.setCredential(headers);
-                return result.data;
-            });
-    }
-
-    createFacebookUser(headers): Observable<any> {
-        return Observable
-            .from(axios({
-                url: this.baseAuthURL,
-                method: 'POST',
-                headers,
-            }))
-            .map(result => result.data);
+        return Observable.fromEvent(database, 'value')
+            .map(this.mapDBSnapshot);
     }
 
     getEvents(): Observable<any> {
-        return Observable.from(this.api.get('/events'))
-            .map(result => this.checkRequest(result));
+        return this.getEntriesFromDBName('events');
     }
 
     getOpportunities(): Observable<any> {
-        return Observable.from(this.api.get('/opportunities'))
-            .map(result => this.checkRequest(result));
+        return this.getEntriesFromDBName('opportunities');
     }
 
     getHome(): Observable<any> {
-        return Observable.from(this.api.get('/home'))
-            .map(result => this.checkRequest(result));
+        return this.getEntriesFromDBName('home');
     }
 
     getRestaurants(): Observable<any> {
-        return Observable.from(this.api.get('/restaurants'))
-            .map(result => this.checkRequest(result));
+        return this.getEntriesFromDBName('restaurants');
     }
 }

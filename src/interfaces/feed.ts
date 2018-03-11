@@ -7,7 +7,7 @@ export enum FeedType {
 };
 
 export interface Feed {
-    id: Number,
+    id: String,
     image?: String,
     feedType: FeedType,
     name: String,

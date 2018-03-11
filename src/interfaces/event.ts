@@ -10,7 +10,7 @@ export enum EventType {
 };
 
 export interface Event {
-    id: Number,
+    id: String,
     eventType: EventType,
     title: String,
     description: String,

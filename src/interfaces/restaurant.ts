@@ -4,7 +4,7 @@ export enum RestaurantType {
 };
 
 export interface Restaurant {
-    id: Number,
+    id: String,
     image?: String,
     restaurantType: RestaurantType,
     title: String,
