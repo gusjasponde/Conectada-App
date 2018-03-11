@@ -25,7 +25,7 @@ npm run serve
 
 Build
 ```
-npm run android
+npm run build
 ```
 
 ## Contribuidores
