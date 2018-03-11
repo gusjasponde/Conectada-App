@@ -407,7 +407,7 @@ var TabsPage = (function () {
         this.tab4Root = __WEBPACK_IMPORTED_MODULE_5__reports_reports__["a" /* ReportsPage */];
     }
     TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n  <ion-tab [root]="tab0Root" swipeBackEnabled="true" tabIcon="home"></ion-tab>\n\n  <ion-tab [root]="tab1Root" tabIcon="calendar"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabIcon="star"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabIcon="restaurant"></ion-tab>\n\n  <ion-tab [root]="tab4Root" tabIcon="megaphone"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\tabs\tabs.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\tabs\tabs.html"*/'<ion-tabs>\n\n  <ion-tab [root]="tab0Root" tabTitle="início" swipeBackEnabled="true" tabIcon="home"></ion-tab>\n\n  <ion-tab [root]="tab1Root" tabTitle="eventos" tabIcon="calendar"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="oportunidades" tabIcon="star"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabTitle="restaurantes" tabIcon="restaurant"></ion-tab>\n\n  <ion-tab [root]="tab4Root" tabTitle="reportar" tabIcon="megaphone"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\tabs\tabs.html"*/
         })
     ], TabsPage);
     return TabsPage;
@@ -1157,7 +1157,7 @@ var ReportsPage = (function () {
     };
     ReportsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-reports',template:/*ion-inline-start:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\reports\reports.html"*/'<ion-header>\n\n  <ion-navbar color="white">\n\n    <ion-title>Reportar</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-refresher (ionRefresh)="refresh($event)">\n\n    <ion-refresher-content\n\n      pullingIcon="arrow-dropdown"\n\n      refreshingSpinner="crescent">\n\n    </ion-refresher-content>\n\n  </ion-refresher>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-label>Categoria</ion-label>\n\n    <ion-select [(ngModel)]="report.type">\n\n      <ion-option value="{{type.id}}" *ngFor="let type of reportTypes">{{ type.name }}</ion-option>\n\n    </ion-select>\n\n  </ion-item>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-input type="text" placeholder="Assunto" [value]="report.title"></ion-input>\n\n  </ion-item>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-textarea rows="5" placeholder="Descrição" [value]="report.description"></ion-textarea>\n\n  </ion-item>\n\n\n\n  <div class="buttons">\n\n    <button ion-button round (click)="submitReport()">Reportar para universidade</button>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\reports\reports.html"*/,
+            selector: 'page-reports',template:/*ion-inline-start:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\reports\reports.html"*/'<ion-header>\n\n  <ion-navbar color="white">\n\n    <ion-title>Reportar</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-card>\n\n    <ion-card-content>\n\n      <ion-card-title>\n\n        <ion-icon name="hammer"></ion-icon>\n\n        disponível em breve!\n\n      </ion-card-title>\n\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-label>Categoria</ion-label>\n\n    <ion-select disabled [(ngModel)]="report.type">\n\n      <ion-option value="{{type.id}}" *ngFor="let type of reportTypes">{{ type.name }}</ion-option>\n\n    </ion-select>\n\n  </ion-item>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-input type="text" disabled placeholder="Assunto" [value]="report.title"></ion-input>\n\n  </ion-item>\n\n\n\n  <ion-item no-margin padding-left padding-right>\n\n    <ion-textarea rows="5" disabled placeholder="Descrição" [value]="report.description"></ion-textarea>\n\n  </ion-item>\n\n\n\n  <div class="buttons">\n\n    <button ion-button disabled round (click)="submitReport()">Reportar para universidade</button>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\mathe\Desktop\M2irror\Conectada-App-Old\src\pages\reports\reports.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0_ionic_angular__["f" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_3__providers_reports_reports__["a" /* ReportsProvider */]])
@@ -1254,43 +1254,43 @@ var map = {
 		10
 	],
 	"../pages/invite/invite.module": [
-		1190,
+		1191,
 		8
 	],
 	"../pages/inviteSent/inviteSent.module": [
-		1191,
+		1190,
 		9
 	],
 	"../pages/login/login.module": [
-		1192,
+		1193,
 		7
 	],
 	"../pages/meals/meals.module": [
-		1193,
+		1198,
 		6
 	],
 	"../pages/modal/modal.module": [
-		1194,
+		1192,
 		5
 	],
 	"../pages/opportunities/opportunities.module": [
-		1195,
+		1194,
 		4
 	],
 	"../pages/opportunityModal/opportunityModal.module": [
-		1196,
+		1199,
 		3
 	],
 	"../pages/profile/profile.module": [
-		1197,
+		1195,
 		2
 	],
 	"../pages/reports/reports.module": [
-		1198,
+		1197,
 		1
 	],
 	"../pages/tabs/tabs.module": [
-		1199,
+		1196,
 		0
 	]
 };
@@ -1679,16 +1679,16 @@ var AppModule = (function () {
                     links: [
                         { loadChildren: '../pages/events/events.module#EventsModule', name: 'EventsPage', segment: 'events', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/home/home.module#HomeModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/invite/invite.module#InviteModule', name: 'InvitePage', segment: 'invite', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/inviteSent/inviteSent.module#InviteSentModule', name: 'InviteSentPage', segment: 'inviteSent', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/meals/meals.module#MealsModule', name: 'MealsPage', segment: 'meals', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/invite/invite.module#InviteModule', name: 'InvitePage', segment: 'invite', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal/modal.module#ModalModule', name: 'ModalPage', segment: 'modal', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/opportunities/opportunities.module#OpportunitiesModule', name: 'OpportunitiesPage', segment: 'opportunities', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/opportunityModal/opportunityModal.module#OpportunityModalModule', name: 'OpportunityModalPage', segment: 'opportunityModal', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/profile/profile.module#ProfileModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reports/reports.module#ReportsModule', name: 'ReportsPage', segment: 'reports', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/meals/meals.module#MealsModule', name: 'MealsPage', segment: 'meals', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/opportunityModal/opportunityModal.module#OpportunityModalModule', name: 'OpportunityModalPage', segment: 'opportunityModal', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["a" /* IonicStorageModule */].forRoot()
