@@ -22,7 +22,7 @@ export class MapComponent implements OnChanges {
   constructor() {}
 
   addMarker(marker: Marker) {
-    const { title, description, latitude, longitude } = marker;
+    const { title, latitude, longitude } = marker;
     const googleMarker = new google.maps.Marker({
       position: new google.maps.LatLng(latitude, longitude),
       map: this.map, title,

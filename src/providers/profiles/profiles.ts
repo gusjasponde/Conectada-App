@@ -1,6 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { ApiProvider } from '../api'; 
 import { Profile } from '../../interfaces/profile';
 import { Observable } from 'rxjs/Observable';
 
@@ -17,9 +16,7 @@ const profile: Profile = {
 
 @Injectable()
 export class ProfilesProvider {
-    constructor(
-        @Inject(ApiProvider) private apiProvider: ApiProvider
-    ) {}
+    constructor() {}
 
     getProfile(): Observable<Profile> {
         return Observable.from(Promise.resolve(profile));

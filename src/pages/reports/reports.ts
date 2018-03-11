@@ -5,7 +5,6 @@ import { ModalPage } from '../modal/modal';
 import { Report } from '../../interfaces/report';
 import { ReportType } from '../../interfaces/reportType';
 import { ReportsProvider } from '../../providers/reports/reports';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()
@@ -31,7 +30,6 @@ export class ReportsPage implements OnDestroy {
   submitReport() {
     return this.reportsProvider.submitReport(this.report)
       .subscribe(data => {
-        const { title, description } = data;
         const modal = this.modalCtrl.create(ModalPage, data);
         modal.present();
       });

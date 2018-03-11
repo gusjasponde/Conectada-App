@@ -1,9 +1,7 @@
-import { IonicPage, NavController, NavParams,
-  ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Component, OnDestroy } from '@angular/core';
 
 import * as utils from '../utils';
-import { TabsPage } from '../tabs/tabs';
 import { LoginPage } from '../login/login';
 import { ModalPage } from '../modal/modal';
 import { ProfilesProvider } from '../../providers/profiles/profiles';
@@ -31,9 +29,6 @@ export class ProfilePage implements OnDestroy {
   profileSub: Subscription;
 
   constructor(
-    private navParams: NavParams, 
-    private viewCtrl: ViewController,
-    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private nav: NavController,
     private authsProvider: AuthsProvider,

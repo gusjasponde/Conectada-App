@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 
 import { ApiProvider } from '../api'; 
-import { Feed } from '../../interfaces/feed';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()

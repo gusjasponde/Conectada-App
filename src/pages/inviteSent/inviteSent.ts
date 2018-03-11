@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-
-import * as utils from '../utils';
-import { TabsPage } from '../tabs/tabs';
+import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -10,9 +7,7 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'inviteSent.html',
 })
 export class InviteSentPage {
-  constructor(
-    private nav: NavController
-  ) {}
+  constructor() {}
 
   refresh($event) {
     setTimeout(() => $event.complete(), 1000);

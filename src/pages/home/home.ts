@@ -3,10 +3,9 @@ import { Component, OnDestroy } from '@angular/core';
 
 import { ProfilePage } from '../profile/profile';
 import { HomeProvider } from '../../providers/home/home';
-import { Feed, ViewFeed, FeedType } from '../../interfaces/feed';
+import { ViewFeed, FeedType } from '../../interfaces/feed';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { ModalPage } from '../modal/modal';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, AlertController, NavController,
-  NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 import * as utils from '../utils';
 import { TabsPage } from '../tabs/tabs';
@@ -8,8 +7,6 @@ import { InvitePage } from '../invite/invite';
 import { InviteSentPage } from '../inviteSent/inviteSent';
 import { UserStatus } from '../../interfaces/userStatus';
 import { AuthsProvider } from '../../providers/auths/auths';
-
-declare const window;
 
 @IonicPage()
 @Component({
@@ -19,10 +16,7 @@ declare const window;
 export class LoginPage {
   constructor (
     private nav: NavController,
-    private viewCtrl: ViewController,
-    private params: NavParams,
-    private authsProvider: AuthsProvider,
-    private alert: AlertController
+    private authsProvider: AuthsProvider
   ) {}
 
   login() {

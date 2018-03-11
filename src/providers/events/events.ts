@@ -1,4 +1,3 @@
-import { ModalController } from 'ionic-angular';
 import { Injectable, Inject } from '@angular/core';
 
 import { ApiProvider } from '../api'; 

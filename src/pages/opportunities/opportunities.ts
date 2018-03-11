@@ -5,7 +5,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Opportunity, OpportunityType } from '../../interfaces/opportunity';
 import { OpportunityModalPage } from '../opportunityModal/opportunityModal';
 import { OpportunitiesProvider } from '../../providers/opportunities/opportunities';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @IonicPage()

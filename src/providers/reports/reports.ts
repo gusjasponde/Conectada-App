@@ -1,6 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { ApiProvider } from '../api'; 
 import { reportTypes } from './reportTypes';
 import { Report } from '../../interfaces/report';
 import { SentReport } from '../../interfaces/sentReport';
@@ -15,10 +14,6 @@ const response: SentReport = {
 
 @Injectable()
 export class ReportsProvider {
-    constructor(
-        @Inject(ApiProvider) private apiProvider: ApiProvider
-    ) {}
-
     getReportTypes(): Observable<Array<ReportType>> {
         return Observable.from(Promise.resolve(reportTypes));
     }

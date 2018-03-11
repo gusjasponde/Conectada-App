@@ -2,12 +2,8 @@ import axios from 'axios';
 import { Observable } from 'rxjs';
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
 
 import * as utils from '../utils';
-import { Event } from '../../interfaces/event';
-
-declare const ga;
 
 @Injectable()
 export class ApiProvider {

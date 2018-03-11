@@ -47,7 +47,7 @@ export class EventsPage implements OnDestroy {
   }
 
   handleSelectedMarker(selected: SelectedMarkEvent) {
-    const { title, latitude, longitude } = selected.marker;
+    const { title } = selected.marker;
     const infoWindow = new google.maps.InfoWindow;
     const htmlTitle = `<b>${title}</b>`;
     infoWindow.setContent(htmlTitle);
