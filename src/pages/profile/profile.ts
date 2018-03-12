@@ -16,16 +16,13 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ProfilePage implements OnDestroy {
   user: Profile = {
+    uid: '',
     image: '',
     name: '',
-    username: '',
-    university: '',
-    description: '',
     email: '',
     phone: '',
-    gender: ''
   };
-  
+
   profileSub: Subscription;
 
   constructor(

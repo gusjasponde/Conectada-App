@@ -5,31 +5,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>
-        <ion-icon name="hammer"></ion-icon>
-        disponível em breve!
-      </ion-card-title>
-    </ion-card-content>
-  </ion-card>
-
   <ion-item no-margin padding-left padding-right>
     <ion-label>Categoria</ion-label>
-    <ion-select disabled [(ngModel)]="report.type">
-      <ion-option value="{{type.id}}" *ngFor="let type of reportTypes">{{ type.name }}</ion-option>
+    <ion-select [(ngModel)]="report.type">
+      <ion-option value="{{type.name}}" *ngFor="let type of reportTypes">{{ type.name }}</ion-option>
     </ion-select>
   </ion-item>
 
   <ion-item no-margin padding-left padding-right>
-    <ion-input type="text" disabled placeholder="Assunto" [value]="report.title"></ion-input>
+    <ion-input type="text" placeholder="Assunto"  [(ngModel)]="report.title"></ion-input>
   </ion-item>
 
   <ion-item no-margin padding-left padding-right>
-    <ion-textarea rows="5" disabled placeholder="Descrição" [value]="report.description"></ion-textarea>
+    <ion-textarea rows="5" placeholder="Descrição" [(ngModel)]="report.description"></ion-textarea>
   </ion-item>
 
   <div class="buttons">
-    <button ion-button disabled round (click)="submitReport()">Reportar para universidade</button>
+    <button ion-button round (click)="submitReport()">Reportar para universidade</button>
   </div>
 </ion-content>

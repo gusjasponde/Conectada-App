@@ -18,14 +18,25 @@ export class AuthsProvider {
             messagingSenderId: "800737561462"
           };
         firebase.initializeApp(config);
+
+        this.updateUserStatus();
+    }
+
+    updateUserStatus() {
+        if (firebase.auth().currentUser) {
+            this.userStatus = UserStatus.authorized;
+        } else {
+            this.userStatus = UserStatus.loggedOut;
+        }
     }
 
     getLoginStatus(): Promise<UserStatus> {
-        return Promise.resolve(this.userStatus)
+        return Promise.resolve(this.userStatus);
     }
 
     login(): Promise<UserStatus> {
-        return firebase.auth().signInAnonymously()
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        return firebase.auth().signInWithPopup(googleProvider)
             .then(() => UserStatus.authorized)
             .catch(() => UserStatus.loggedOut);
     }

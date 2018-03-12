@@ -26,7 +26,7 @@ export class OpportunityModalPage implements OnInit, OnDestroy {
 
   sendInterest() {
     this.viewCtrl.dismiss();
-    this.sendInterestSub = this.opportunitiesProvider.sendInterest()
+    this.sendInterestSub = this.opportunitiesProvider.sendInterest(this.opportunity)
       .subscribe(response => {
         const modal = this.modalCtrl.create(ModalPage, response);
         modal.present();

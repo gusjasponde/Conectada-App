@@ -1,4 +1,4 @@
 export interface ReportType {
-    id: Number,
+    id: String,
     name: String,
 };

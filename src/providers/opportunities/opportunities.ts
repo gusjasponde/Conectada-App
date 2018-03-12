@@ -5,8 +5,7 @@ import { Opportunity } from '../../interfaces/opportunity';
 import { SentInterest } from '../../interfaces/sentInterest';
 import { Observable } from 'rxjs/Observable';
 
-const sendInterestResponse: SentInterest = {
-    id: 12346,
+const response: SentInterest = {
     title: 'Interesse enviado',
     description: 'Seu interesse nessa vaga foi enviado com sucesso!',
 };
@@ -17,8 +16,9 @@ export class OpportunitiesProvider {
         @Inject(ApiProvider) private apiProvider: ApiProvider
     ) {}
 
-    sendInterest(): Observable<SentInterest> {
-        return Observable.from(Promise.resolve(sendInterestResponse));
+    sendInterest(opportunity): Observable<SentInterest> {
+        return this.apiProvider.submitInterest(opportunity)
+            .map(() => response);
     }
 
     getOpportunities(): Observable<Array<Opportunity>> {
