@@ -6,6 +6,7 @@ import { UserStatus } from '../../interfaces/userStatus';
 @Injectable()
 export class AuthsProvider {
     userStatus = UserStatus.loggedOut;
+    googleProvider;
 
     constructor() {
         // this is not private
@@ -18,7 +19,7 @@ export class AuthsProvider {
             messagingSenderId: "800737561462"
           };
         firebase.initializeApp(config);
-
+        this.googleProvider = new firebase.auth.GoogleAuthProvider();
         this.updateUserStatus();
     }
 
@@ -35,8 +36,7 @@ export class AuthsProvider {
     }
 
     login(): Promise<UserStatus> {
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        return firebase.auth().signInWithPopup(googleProvider)
+        return firebase.auth().signInWithPopup(this.googleProvider)
             .then(() => UserStatus.authorized)
             .catch(() => UserStatus.loggedOut);
     }
